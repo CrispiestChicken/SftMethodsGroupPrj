@@ -1,0 +1,22 @@
+version: '3'
+services:
+  # Java application service
+  app:
+    build: .
+    depends_on:
+      - db
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: world
+      MYSQL_USER: root
+      MYSQL_PASSWORD: example
+
+  # MySQL database service
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    volumes:
+      - ./world-db:/docker-entrypoint-initdb.d
