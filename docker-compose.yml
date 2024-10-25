@@ -1,22 +1,11 @@
 version: '3'
 services:
-  # Java application service
+  # Application Dockerfile is in same folder which is .
   app:
     build: .
-    depends_on:
-      - db
-    environment:
-      MYSQL_HOST: db
-      MYSQL_DATABASE: world
-      MYSQL_USER: root
-      MYSQL_PASSWORD: example
 
-  # MySQL database service
+  # db is is db folder
   db:
-    image: mysql:8.0
+    build: db/.
     command: --default-authentication-plugin=mysql_native_password
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: example
-    volumes:
-      - ./world-db:/docker-entrypoint-initdb.d
