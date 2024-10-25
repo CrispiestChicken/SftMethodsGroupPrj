@@ -108,7 +108,7 @@ public class App
     {
         if (city != null)
         {
-            System.out.printf("%-15s %-15s %-15s %-15s %n", "Name", "Country Code", "District", "Population");
+            System.out.printf("%-15s %-15s %-15s %-15s %n", "Name", "Country Code", "District", "Population ");
             System.out.printf("%-15s %-15s %-15s %-15s %n", city.name, city.countryCode, city.district , city.population);
         }
     }
