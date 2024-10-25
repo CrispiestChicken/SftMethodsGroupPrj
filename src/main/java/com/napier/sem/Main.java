@@ -9,6 +9,9 @@ public class Main {
         // Connect to database
         a.connect();
 
+        City city = a.getCity(2);
+
+        a.displayCity(city);
         // Disconnect from database
         a.disconnect();
     }
