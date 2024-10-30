@@ -88,7 +88,7 @@ public class App
             {
                 City city = new City();
                 city.population = rset.getInt("Population");
-                city.countryCode = rset.getString("CountryCode");
+                city.countryCode = rset.getString("CountryCode");           /** this may need changed to just country and not country code */
                 city.district = rset.getString("District");
                 city.name = rset.getString("Name");
                 return city;
@@ -104,12 +104,48 @@ public class App
         }
     }
 
+
     public void displayCity(City city)
     {
         if (city != null)
         {
             System.out.printf("%-15s %-15s %-15s %-15s %n", "Name", "Country Code", "District", "Population ");
             System.out.printf("%-15s %-15s %-15s %-15s %n", city.name, city.countryCode, city.district , city.population);
+        }
+    }
+
+
+    public Capital_City getCapCity(int cityId)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Name, CountryCode, Population "         // this is not complete will need to get capital city code from each country
+                            + "FROM city "
+                            + "WHERE ID = " + cityId;
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new employee if valid.
+            // Check one is returned
+            if (rset.next())
+            {
+                Capital_City Ccity = new Capital_City();
+                Ccity.population = rset.getInt("Population");
+                Ccity.countryCode = rset.getString("CountryCode");
+                Ccity.name = rset.getString("Name");
+                return Ccity;
+            }
+            else
+                return null;
+        }
+        catch (Exception f)
+        {
+            System.out.println(f.getMessage());
+            System.out.println("Failed to get capital city details");
+            return null;
         }
     }
 
