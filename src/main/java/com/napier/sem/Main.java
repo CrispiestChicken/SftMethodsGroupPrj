@@ -1,12 +1,18 @@
 package com.napier.sem;
 
 public class Main {
+    public static void main(String[] args)
+    {
+        // Create new Application
+        App a = new App();
+        System.out.println("You ARE IN MAIN!!");
+        // Connect to database
+        a.connect();
 
-    /**
-     * Main function currently only a hello world program.
-     * @param args .
-     */
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
+        City city = a.getCity(2);
+
+        a.displayCity(city);
+        // Disconnect from database
+        a.disconnect();
     }
 }
