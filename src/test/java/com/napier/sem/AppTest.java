@@ -11,10 +11,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AppTest {
     static App app;
     static City city;
+    static Capital_City capitalcity;
     @BeforeAll
     static void init() {
         app = new App();
         city = new City();
+        capitalcity = new Capital_City();
     }
 
     @Test
@@ -28,5 +30,18 @@ public class AppTest {
         app.displayCity(city);
         assertTrue(cityName.equals("Edinburgh"));
     }
+    /**
+    @Test
+    void testCapitalCity()
+    {
+
+        capitalcity.name = "Edinburgh";
+        capitalcity.countryCode = "SCO";
+        capitalcity.population = 10000;
+        String cityName = capitalcity.name;
+        app.displayCity(city);
+        assertTrue(cityName.equals("Edinburgh"));
+    }
+*/
 
 }
