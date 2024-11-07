@@ -2,7 +2,6 @@ package com.napier.sem;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 
 import java.util.ArrayList;
 
@@ -17,6 +16,7 @@ public class AppTest {
         app = new App();
         city = new City();
         capitalcity = new Capital_City();
+        app.connect();
     }
 
     @Test
@@ -43,5 +43,17 @@ public class AppTest {
         assertTrue(cityName.equals("Edinburgh"));
     }
 */
+
+    /**
+     * Tests if the data collected from the database is what it's meant to be
+     * for the all cities population descending.
+     */
+    @Test
+    void TestCorrectCitiesPopDesc()
+    {
+        ArrayList<City> CitiesPopDesc = app.GetAllCitiesPopDesc();
+
+        assertEquals(CitiesPopDesc.get(0).name,"Mumbai (Bombay)");
+    }
 
 }

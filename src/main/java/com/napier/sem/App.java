@@ -1,6 +1,7 @@
 package com.napier.sem;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class App
 {
@@ -32,7 +33,7 @@ public class App
             try
             {
                 // Wait a bit for db to start
-                Thread.sleep(30000);
+                Thread.sleep(3000);
                 // Connect to database
                 con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
@@ -147,6 +148,60 @@ public class App
             System.out.println("Failed to get capital city details");
             return null;
         }
+    }
+
+
+    /**
+     * Gets all the cities ordered from the highest population to smallest.
+     * @return An array list containing City objects.
+     */
+    public ArrayList<City> GetAllCitiesPopDesc()
+    {
+        // The arraylist storing all the city information.
+        ArrayList<City> CitiesInPopDesc = new ArrayList<City>();
+
+        try
+        {
+            // Creating SQL statement
+            Statement stmt = con.createStatement();
+
+
+            // String for SQL statement
+            String selectString =
+                    "SELECT Name, CountryCode, District, Population "
+                            + "FROM city "
+                            + "ORDER BY Population Desc ;";
+
+
+            // Execute SQL statement
+            ResultSet resultSet = stmt.executeQuery(selectString);
+
+            // Declaring city up here so that it isn't declaring it over and over again.
+            City city;
+
+            // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
+            while (resultSet.next())
+            {
+                city = new City();
+                city.population = resultSet.getInt("Population");
+                city.countryCode = resultSet.getString("CountryCode");
+                city.district = resultSet.getString("District");
+                city.name = resultSet.getString("Name");
+
+                CitiesInPopDesc.add(city);
+
+            }
+        }
+        // If any error happens.
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+
+        // Returns the city information to be used as needed.
+        return CitiesInPopDesc;
     }
 
 }
