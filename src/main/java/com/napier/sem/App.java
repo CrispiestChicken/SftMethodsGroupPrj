@@ -89,7 +89,7 @@ public class App
             {
                 City city = new City();
                 city.population = rset.getInt("Population");
-                city.countryCode = rset.getString("CountryCode");           /** this may need changed to just country and not country code */
+                city.countryCode = rset.getString("CountryCode");           /* this may need changed to just country and not country code */
                 city.district = rset.getString("District");
                 city.name = rset.getString("Name");
                 return city;
@@ -158,7 +158,7 @@ public class App
     public ArrayList<City> GetAllCitiesPopDesc()
     {
         // The arraylist storing all the city information.
-        ArrayList<City> CitiesInPopDesc = new ArrayList<City>();
+        ArrayList<City> CitiesInPopDesc = new ArrayList<>();
 
         try
         {
@@ -203,5 +203,7 @@ public class App
         // Returns the city information to be used as needed.
         return CitiesInPopDesc;
     }
+
+
 
 }
