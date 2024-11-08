@@ -281,4 +281,16 @@ public class App {
         return capitalCitiesInPopDesc;
     }
 
+    public LanguageReport()
+    {
+        int WorldPopulation = 0;
+        int EnglishSpeakerNumber = 0 ;
+        int ChineseSpeakerNumber = 0;
+        int HindiSpeakerNumber = 0;
+        int SpanishSpeakerNumber = 0;
+        int ArabicSpeakerNumber = 0;
+        String selectstring =
+                "SELECT country.CountryCode language.CountryCode"
+    }
+
 }
