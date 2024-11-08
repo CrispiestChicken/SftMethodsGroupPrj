@@ -3,8 +3,7 @@ package com.napier.sem;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class App
-{
+public class App {
     /**
      * Connection to MySQL database.
      */
@@ -13,39 +12,29 @@ public class App
     /**
      * Connect to the MySQL database.
      */
-    public void connect()
-    {
-        try
-        {
+    public void connect() {
+        try {
             // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             System.out.println("Could not load SQL driver");
             System.exit(-1);
         }
 
         int retries = 10;
-        for (int i = 0; i < retries; ++i)
-        {
+        for (int i = 0; i < retries; ++i) {
             System.out.println("Connecting to database...");
-            try
-            {
+            try {
                 // Wait a bit for db to start
                 Thread.sleep(3000);
                 // Connect to database
                 con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
-            }
-            catch (SQLException sqle)
-            {
+            } catch (SQLException sqle) {
                 System.out.println("Failed to connect to database attempt " + Integer.toString(i));
                 System.out.println(sqle.getMessage());
-            }
-            catch (InterruptedException ie)
-            {
+            } catch (InterruptedException ie) {
                 System.out.println("Thread interrupted? Should not happen.");
             }
         }
@@ -54,26 +43,19 @@ public class App
     /**
      * Disconnect from the MySQL database.
      */
-    public void disconnect()
-    {
-        if (con != null)
-        {
-            try
-            {
+    public void disconnect() {
+        if (con != null) {
+            try {
                 // Close connection
                 con.close();
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 System.out.println("Error closing connection to database");
             }
         }
     }
 
-    public City getCity(int cityId)
-    {
-        try
-        {
+    public City getCity(int cityId) {
+        try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
@@ -85,20 +67,16 @@ public class App
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return new employee if valid.
             // Check one is returned
-            if (rset.next())
-            {
+            if (rset.next()) {
                 City city = new City();
                 city.population = rset.getInt("Population");
                 city.countryCode = rset.getString("CountryCode");           /* this may need changed to just country and not country code */
                 city.district = rset.getString("District");
                 city.name = rset.getString("Name");
                 return city;
-            }
-            else
+            } else
                 return null;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get city details");
             return null;
@@ -106,20 +84,16 @@ public class App
     }
 
 
-    public void displayCity(City city)
-    {
-        if (city != null)
-        {
+    public void displayCity(City city) {
+        if (city != null) {
             System.out.printf("%-15s %-15s %-15s %-15s %n", "Name", "Country Code", "District", "Population ");
-            System.out.printf("%-15s %-15s %-15s %-15s %n", city.name, city.countryCode, city.district , city.population);
+            System.out.printf("%-15s %-15s %-15s %-15s %n", city.name, city.countryCode, city.district, city.population);
         }
     }
 
 
-    public Capital_City getCapCity(int cityId)
-    {
-        try
-        {
+    public Capital_City getCapCity(int cityId) {
+        try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
@@ -131,19 +105,15 @@ public class App
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return new employee if valid.
             // Check one is returned
-            if (rset.next())
-            {
+            if (rset.next()) {
                 Capital_City Ccity = new Capital_City();
                 Ccity.population = rset.getInt("Population");
                 Ccity.countryCode = rset.getString("CountryCode");
                 Ccity.name = rset.getString("Name");
                 return Ccity;
-            }
-            else
+            } else
                 return null;
-        }
-        catch (Exception f)
-        {
+        } catch (Exception f) {
             System.out.println(f.getMessage());
             System.out.println("Failed to get capital city details");
             return null;
@@ -153,15 +123,14 @@ public class App
 
     /**
      * Gets all the cities ordered from the highest population to smallest.
+     *
      * @return An array list containing City objects.
      */
-    public ArrayList<City> GetAllCitiesPopDesc()
-    {
+    public ArrayList<City> GetAllCitiesPopDesc() {
         // The arraylist storing all the city information.
         ArrayList<City> CitiesInPopDesc = new ArrayList<>();
 
-        try
-        {
+        try {
             // Creating SQL statement
             Statement stmt = con.createStatement();
 
@@ -180,8 +149,7 @@ public class App
             City city;
 
             // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
-            while (resultSet.next())
-            {
+            while (resultSet.next()) {
                 city = new City();
                 city.population = resultSet.getInt("Population");
                 city.countryCode = resultSet.getString("CountryCode");
@@ -193,8 +161,7 @@ public class App
             }
         }
         // If any error happens.
-        catch (Exception e)
-        {
+        catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get city details");
             return null;
@@ -204,6 +171,57 @@ public class App
         return CitiesInPopDesc;
     }
 
+
+
+    /**
+     * Gets all the capital cities ordered from the highest population to smallest.
+     *
+     * @return An array list containing Capital_City objects.
+     */
+    public ArrayList<Capital_City> GetAllCapitalCitiesPopDesc() {
+        // The arraylist storing all the capital city information.
+        ArrayList<Capital_City> capitalCitiesInPopDesc = new ArrayList<>();
+
+        try {
+            // Creating SQL statement
+            Statement stmt = con.createStatement();
+
+
+            // String for SQL statement
+            String selectString =
+                    "SELECT city.Name, city.CountryCode, city.Population"
+                            + "FROM country"
+                            + "INNER JOIN city ON city.ID = country.Capital"
+                            + "ORDER BY Population Desc ;";
+
+
+            // Execute SQL statement
+            ResultSet resultSet = stmt.executeQuery(selectString);
+
+            // Declaring city up here so that it isn't declaring it over and over again.
+            Capital_City capitalCity;
+
+            // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
+            while (resultSet.next()) {
+                capitalCity = new Capital_City();
+                capitalCity.name = resultSet.getString("Name");
+                capitalCity.population = resultSet.getInt("Population");
+                capitalCity.countryCode = resultSet.getString("CountryCode");
+
+                capitalCitiesInPopDesc.add(capitalCity);
+
+            }
+        }
+        // If any error happens.
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+
+        // Returns the city information to be used as needed.
+        return capitalCitiesInPopDesc;
+    }
 
 
 }
