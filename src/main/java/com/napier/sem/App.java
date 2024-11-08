@@ -224,4 +224,61 @@ public class App {
     }
 
 
+
+
+    /**
+     * Gets a given number Cities ordered from the highest population to smallest.
+     *
+     * @return An array list containing Capital_City objects.
+     */
+    public ArrayList<Capital_City> GetGivenNumberOfCapitalCitiesPopDesc(int numOfCitiesToGet)
+    {
+
+        // The arraylist storing the capital city information.
+        ArrayList<Capital_City> capitalCitiesInPopDesc = new ArrayList<>();
+
+        try {
+            // Creating SQL statement
+            Statement stmt = con.createStatement();
+
+
+            // String for SQL statement
+            // Idk if the limit part of this will work through java, but I can't test it right now.
+            String selectString =
+                    "SELECT city.Name, city.CountryCode, city.Population"
+                            + "FROM country"
+                            + "INNER JOIN city ON city.ID = country.Capital"
+                            + "ORDER BY Population Desc "
+                            + "LIMIT " + numOfCitiesToGet;
+
+
+
+            // Execute SQL statement
+            ResultSet resultSet = stmt.executeQuery(selectString);
+
+            // Declaring city up here so that it isn't declaring it over and over again.
+            Capital_City capitalCity;
+
+            // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
+            while (resultSet.next()) {
+                capitalCity = new Capital_City();
+                capitalCity.name = resultSet.getString("Name");
+                capitalCity.population = resultSet.getInt("Population");
+                capitalCity.countryCode = resultSet.getString("CountryCode");
+
+                capitalCitiesInPopDesc.add(capitalCity);
+
+            }
+        }
+        // If any error happens.
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+
+        // Returns the city information to be used as needed.
+        return capitalCitiesInPopDesc;
+    }
+
 }
