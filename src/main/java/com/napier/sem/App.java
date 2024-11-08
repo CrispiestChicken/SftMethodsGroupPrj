@@ -239,7 +239,7 @@ public class App {
 
             // String for SQL statement
             String selectString =
-                    "SELECT Name, Code, Population "
+                    "SELECT Name, Code, Region, Population, Continent, Capital "
                             + "FROM country "
                             + "ORDER BY Population Desc ;";
 
@@ -256,6 +256,9 @@ public class App {
                 country.population = resultSet.getInt("Population");
                 country.code = resultSet.getString("Code");
                 country.name = resultSet.getString("Name");
+                country.region = resultSet.getString("Region");
+                country.continent = resultSet.getString("Continent");
+                country.capital = resultSet.getString("Capital");
 
                 CountriesInPopDesc.add(country);
 

@@ -5,4 +5,6 @@ public class Country {
         public String code;
         public String region;
         public int population;
+        public String continent;
+        public String capital;
 }
