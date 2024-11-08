@@ -224,4 +224,55 @@ public class App {
     }
 
 
+    /**
+     * All the countries in the world organised by largest population to smallest
+     * @return An array list containing Country objects.
+     */
+    public ArrayList<Country> GetAllCountriesPopDesc() {
+        // The arraylist storing all the country information.
+        ArrayList<Country> CountriesInPopDesc = new ArrayList<>();
+
+        try {
+            // Creating SQL statement
+            Statement stmt = con.createStatement();
+
+
+            // String for SQL statement
+            String selectString =
+                    "SELECT Name, Code, Population "
+                            + "FROM country "
+                            + "ORDER BY Population Desc ;";
+
+
+            // Execute SQL statement
+            ResultSet resultSet = stmt.executeQuery(selectString);
+
+            // Declaring city.
+            Country country;
+
+            // Stores data in the array list.
+            while (resultSet.next()) {
+                country = new Country();
+                country.population = resultSet.getInt("Population");
+                country.code = resultSet.getString("Code");
+                country.name = resultSet.getString("Name");
+
+                CountriesInPopDesc.add(country);
+
+            }
+        }
+        // If any error happens.
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get county details");
+            return null;
+        }
+
+        // Returns the city information to be used as needed.
+        return CountriesInPopDesc;
+    }
+
+
+
+
 }
