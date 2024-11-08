@@ -16,7 +16,6 @@ public class AppTest {
         app = new App();
         city = new City();
         capitalcity = new Capital_City();
-        app.connect();
     }
 
     @Test
