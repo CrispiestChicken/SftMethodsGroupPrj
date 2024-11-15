@@ -1,5 +1,7 @@
 package com.napier.sem;
 
+import java.util.ArrayList;
+
 public class Main {
     public static void main(String[] args)
     {
@@ -9,7 +11,7 @@ public class Main {
         // Connect to database
         a.connect();
 
-        City city = a.getCity(2);
+        ArrayList<City> city = a.getCity();
 
         a.displayCity(city);
         // Disconnect from database

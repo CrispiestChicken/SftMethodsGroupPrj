@@ -54,28 +54,33 @@ public class App {
         }
     }
 
-    public City getCity(int cityId) {
+    public ArrayList<City>  getCity() {
+        ArrayList<City> cities = new ArrayList<>();
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT Name, CountryCode, District, Population "
-                            + "FROM city "
-                            + "WHERE ID = " + cityId;
+                    "SELECT city.name, country.name, District, city.Population "
+                            + "FROM city join country ON city.CountryCode = country.Code ";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return new employee if valid.
-            // Check one is returned
-            if (rset.next()) {
-                City city = new City();
-                city.population = rset.getInt("Population");
-                city.countryCode = rset.getString("CountryCode");           /* this may need changed to just country and not country code */
+            City city;
+
+            // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
+            while (rset.next()) {
+                city = new City();
+                city.population = rset.getInt("city.Population");
+                city.country = rset.getString("country.name");
                 city.district = rset.getString("District");
-                city.name = rset.getString("Name");
-                return city;
-            } else
-                return null;
+                city.name = rset.getString("city.name");
+
+                cities.add(city);
+
+            }
+
+            return cities;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get city details");
@@ -84,10 +89,13 @@ public class App {
     }
 
 
-    public void displayCity(City city) {
-        if (city != null) {
-            System.out.printf("%-15s %-15s %-15s %-15s %n", "Name", "Country Code", "District", "Population ");
-            System.out.printf("%-15s %-15s %-15s %-15s %n", city.name, city.countryCode, city.district, city.population);
+    public void displayCity(ArrayList<City> citties) {
+        if (citties != null) {
+            System.out.printf("%-30s %-30s %-30s %-30s %n", "Name", "Country", "District", "Population ");
+            for(City city : citties) {
+                System.out.printf("%-30s %-30s %-30s %-30s %n", city.name, city.country, city.district, city.population);
+            }
+
         }
     }
 
