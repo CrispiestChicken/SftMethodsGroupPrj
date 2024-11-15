@@ -54,6 +54,42 @@ public class App {
         }
     }
 
+    public ArrayList<City>  getTopPopulateCitiesInADistrict(int topPopulatedCities, String districtName) {
+        ArrayList<City> cities = new ArrayList<>();
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT city.name, city.Population, city.District " +
+                            "FROM city " +
+                            "WHERE city.District = '" + districtName + "' " +
+                            "ORDER BY city.Population DESC " +
+                            "LIMIT " + topPopulatedCities;
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new employee if valid.
+            City city;
+
+            // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
+            while (rset.next()) {
+                city = new City();
+                city.population = rset.getInt("city.Population");
+                city.district = rset.getString("District");
+                city.name = rset.getString("city.name");
+
+                cities.add(city);
+
+            }
+
+            return cities;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
     public ArrayList<City>  getCity() {
         ArrayList<City> cities = new ArrayList<>();
         try {
@@ -88,6 +124,16 @@ public class App {
         }
     }
 
+
+    public void displayTopCityPopulationInDistrict(ArrayList<City> citties) {
+        if (citties != null) {
+            System.out.printf("%-30s %-30s %-30s %n", "Name", "District", "Population ");
+            for(City city : citties) {
+                System.out.printf("%-30s %-30s %-30s %n", city.name, city.district, city.population);
+            }
+
+        }
+    }
 
     public void displayCity(ArrayList<City> citties) {
         if (citties != null) {

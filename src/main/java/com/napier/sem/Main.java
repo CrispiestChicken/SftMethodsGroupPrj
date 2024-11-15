@@ -11,9 +11,13 @@ public class Main {
         // Connect to database
         a.connect();
 
-        ArrayList<City> city = a.getCity();
+        /*ArrayList<City> city = a.getCity();
 
-        a.displayCity(city);
+        a.displayCity(city);*/
+
+        ArrayList<City> cityPopulationInADistrict = a.getTopPopulateCitiesInADistrict(2, "Zuid-Holland");
+
+        a.displayTopCityPopulationInDistrict(cityPopulationInADistrict);
         // Disconnect from database
         a.disconnect();
     }
