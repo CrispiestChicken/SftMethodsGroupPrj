@@ -340,63 +340,37 @@ public class App {
         return capitalCitiesInPopDesc;
     }
 
-    public LanguageReport()
+    public ArrayList<Language> LanguageReport()
     {
+
         ArrayList<Language> LanguagesReport = new ArrayList<>();
         try {
             Statement stmt = con.createStatement();
-            String GetWorldPopulation = "SELECT SUM(Population) AS TotalPopulation FROM country" ;
-            ResultSet WorldPop = stmt.executeQuery(GetWorldPopulation);
+            String selectString =
+                    "SELECT cl.Language, "
+                            + "       SUM(c.Population * (cl.Percentage / 100)) AS TotalSpeakers, "
+                            + "       (SUM(c.Population * (cl.Percentage / 100)) / (SELECT SUM(Population) FROM country)) * 100 AS WorldPercentage "
+                            + "FROM countrylanguage cl "
+                            + "INNER JOIN country c ON cl.CountryCode = c.Code "
+                            + "WHERE cl.Language IN ('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic') "
+                            + "GROUP BY cl.Language "
+                            + "ORDER BY TotalSpeakers DESC;";
 
+            ResultSet resultSet = stmt.executeQuery(selectString);
 
-            String EnglishSpeaker =
-                    "SELECT (countrylanguage.Percentage / 100.0) * country.Population WHERE countrylanguage.Language = 'English' AS EnglishSpeakersNumber"
-                            + "FROM country"
-                            + "INNER JOIN countrylanguage ON countrylanguage.CountryCode = country.CountryCode";
+            // Declaring city up here so that it isn't declaring it over and over again.
+            Language language;
 
-            ResultSet resultSet = stmt.executeQuery(EnglishSpeaker);
-            Language English = null;
-            English.Name = "English";
-            English.Number = 0 ;
+            // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
+            while (resultSet.next()) {
+                language = new Language();
+                language.Name = resultSet.getString("Language");
+                language.Number = resultSet.getInt("TotalSpeakers");
+                language.Percentage = resultSet.getInt("WorldPercentage");
 
-            while (resultSet.next()){
-                English.Number = English.Number + resultSet.getInt("EnglishSpeakersNumber");
+                LanguagesReport.add(language);
+
             }
-            English.Percentage = (English.Number / WorldPop.getInt("TotalPopulation"));
-            LanguagesReport.add(English);
-
-            String ChineseSpeaker =
-                    "SELECT (countrylanguage.Percentage / 100.0) * country.Population WHERE countrylanguage.Language = 'Chinese' AS ChineseSpeakersNumber"
-                            + "FROM country"
-                            + "INNER JOIN countrylanguage ON countrylanguage.CountryCode = country.CountryCode";
-            ResultSet resultSet2 = stmt.executeQuery(ChineseSpeaker);
-            Language Chinese = null;
-            Chinese.Name = "Chinese";
-            Chinese.Number = 0 ;
-            while (resultSet2.next()){
-                Chinese.Number = Chinese.Number + resultSet2.getInt("ChinesesNumber");
-            }
-            Chinese.Percentage = (Chinese.Number / WorldPop.getInt("TotalPopulation"));
-            LanguagesReport.add(Chinese);
-
-
-            String HindiSpeakerPercentage =
-                    "SELECT (countrylanguage.Percentage / 100.0) * country.Population WHERE countrylanguage.Language = 'Hindi' AS HindiSpeakersNumber"
-                            + "FROM country"
-                            + "INNER JOIN countrylanguage ON countrylanguage.CountryCode = country.CountryCode"
-                            + "(SUM(HindiSpeakersNumber) / WorldPopulation) * 100 AS HindiSpeakerPercentage";
-
-            String SpanishSpeakerPercentage =
-                    "SELECT (countrylanguage.Percentage / 100.0) * country.Population WHERE countrylanguage.Language = 'Spanish' AS SpanishSpeakersNumber"
-                            + "FROM country"
-                            + "INNER JOIN countrylanguage ON countrylanguage.CountryCode = country.CountryCode"
-                            + "(SUM(SpanishSpeakersNumber) / WorldPopulation) * 100 AS SpanishSpeakerPercentage";
-
-            String ArabicSpeakerPercentage =
-                    "SELECT (countrylanguage.Percentage / 100.0) * country.Population WHERE countrylanguage.Language = 'Arabic' AS ArabicSpeakersNumber"
-                            + "FROM country"
-                            + "INNER JOIN countrylanguage ON countrylanguage.CountryCode = country.CountryCode"
-                            + "(SUM(ArabicSpeakersNumber) / WorldPopulation) * 100 AS ArabicSpeakerPercentage";
 
         }
         // If any error happens.
@@ -407,7 +381,17 @@ public class App {
         }
 
         // Returns the city information to be used as needed.
-        return ;
+        return LanguagesReport;
+    }
+
+    public void displayLanguage(ArrayList<Language> LanguagesReport) {
+        if (LanguagesReport != null) {
+            System.out.printf(" %-30s %-30s %-30s %n", "Name", "Number", "Percentage");
+            for(Language language : LanguagesReport) {
+                System.out.printf(" %-30s %-30s %-30s %n", language.Name, language.Number, language.Percentage);
+            }
+
+        }
     }
 
 }

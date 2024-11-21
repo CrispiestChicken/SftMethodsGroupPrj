@@ -21,7 +21,8 @@ public class Main {
         ArrayList<City> cityPopulationInADistrict = a.getTopPopulateCitiesInADistrict(2, "Zuid-Holland");
         ArrayList<City> cappopdesc = a.GetGivenNumberOfCapitalCitiesPopDesc(1);
         a.displayTopCityPopulationInDistrict(cityPopulationInADistrict);
-
+        ArrayList<Language> LanguageReport = a.LanguageReport();
+        a.displayLanguage(LanguageReport);
         a.displayCity(cappopdesc);
         // Disconnect from database
         a.disconnect();
