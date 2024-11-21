@@ -339,15 +339,16 @@ public class App {
         // Returns the city information to be used as needed.
         return capitalCitiesInPopDesc;
     }
-
+            //makes the Language report
     public ArrayList<Language> LanguageReport()
     {
-
+        //new languages array list
         ArrayList<Language> LanguagesReport = new ArrayList<>();
         try {
+            //makes SQL statement
             Statement stmt = con.createStatement();
             String selectString =
-                    "SELECT cl.Language, "
+                    "SELECT cl.Language, "          //makes a table with summing up populations from all countries aswell as the number of speakers of each language in each country to work out global percentage from largest to smallest
                             + "       SUM(c.Population * (cl.Percentage / 100)) AS TotalSpeakers, "
                             + "       (SUM(c.Population * (cl.Percentage / 100)) / (SELECT SUM(Population) FROM country)) * 100 AS WorldPercentage "
                             + "FROM countrylanguage cl "
@@ -358,7 +359,7 @@ public class App {
 
             ResultSet resultSet = stmt.executeQuery(selectString);
 
-            // Declaring city up here so that it isn't declaring it over and over again.
+            // Declaring language up here so that it isn't declaring it over and over again.
             Language language;
 
             // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
@@ -383,7 +384,7 @@ public class App {
         // Returns the city information to be used as needed.
         return LanguagesReport;
     }
-
+            //displays language report to user
     public void displayLanguage(ArrayList<Language> LanguagesReport) {
         if (LanguagesReport != null) {
             System.out.printf("%-30s %-30s %-30s %n", "Language", "Population", "Percentage");
