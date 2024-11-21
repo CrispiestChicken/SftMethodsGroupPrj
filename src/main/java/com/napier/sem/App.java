@@ -283,14 +283,38 @@ public class App {
 
     public LanguageReport()
     {
-        int WorldPopulation = 0;
-        int EnglishSpeakerNumber = 0 ;
-        int ChineseSpeakerNumber = 0;
-        int HindiSpeakerNumber = 0;
-        int SpanishSpeakerNumber = 0;
-        int ArabicSpeakerNumber = 0;
+        String WorldPopulation = "SELECT SUM(Population) FROM country" ;
+
         String selectstring =
-                "SELECT country.CountryCode language.CountryCode"
+                "SELECT (countrylanguage.Percentage / 100.0) * country.Population WHERE countrylanguage.Language = 'English' AS EnglishSpeakersNumber"
+                    + "FROM country"
+                    + "INNER JOIN countrylanguage ON countrylanguage.CountryCode = country.CountryCode"
+                    + "SUM(EnglishSpeakersNumber) / WorldPopulation AS EnglishSpeakerPercentage";
+
+        String selectstring =
+                "SELECT (countrylanguage.Percentage / 100.0) * country.Population WHERE countrylanguage.Language = 'Chinese' AS ChineseSpeakersNumber"
+                        + "FROM country"
+                        + "INNER JOIN countrylanguage ON countrylanguage.CountryCode = country.CountryCode"
+                        + "SUM(ChineseSpeakersNumber) / WorldPopulation AS ChineseSpeakerPercentage";
+
+        String selectstring =
+                "SELECT (countrylanguage.Percentage / 100.0) * country.Population WHERE countrylanguage.Language = 'Hindi' AS HindiSpeakersNumber"
+                        + "FROM country"
+                        + "INNER JOIN countrylanguage ON countrylanguage.CountryCode = country.CountryCode"
+                        + "SUM(HindiSpeakersNumber) / WorldPopulation AS HindiSpeakerPercentage";
+
+        String selectstring =
+                "SELECT (countrylanguage.Percentage / 100.0) * country.Population WHERE countrylanguage.Language = 'Spanish' AS SpanishSpeakersNumber"
+                        + "FROM country"
+                        + "INNER JOIN countrylanguage ON countrylanguage.CountryCode = country.CountryCode"
+                        + "SUM(SpanishSpeakersNumber) / WorldPopulation AS SpanishSpeakerPercentage";
+
+        String selectstring =
+                "SELECT (countrylanguage.Percentage / 100.0) * country.Population WHERE countrylanguage.Language = 'Arabic' AS ArabicSpeakersNumber"
+                        + "FROM country"
+                        + "INNER JOIN countrylanguage ON countrylanguage.CountryCode = country.CountryCode"
+                        + "SUM(ArabicSpeakersNumber) / WorldPopulation AS ArabicSpeakerPercentage";
+
     }
 
 }
