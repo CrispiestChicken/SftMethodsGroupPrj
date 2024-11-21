@@ -12,7 +12,7 @@ public class App {
     /**
      * Connect to the MySQL database.
      */
-    public void connect() {
+    public void connect(String location, int delay) {
         try {
             // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -22,18 +22,23 @@ public class App {
         }
 
         int retries = 10;
+        boolean shouldWait = false;
         for (int i = 0; i < retries; ++i) {
             System.out.println("Connecting to database...");
             try {
-                // Wait a bit for db to start
-                Thread.sleep(3000);
+                if (shouldWait) {
+                    // Wait a bit for db to start
+                    Thread.sleep(delay);
+                }
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://"+location+"/world?allowPublicKeyRetrieval=TRUE&useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
             } catch (SQLException sqle) {
                 System.out.println("Failed to connect to database attempt " + Integer.toString(i));
                 System.out.println(sqle.getMessage());
+
+                shouldWait = true;
             } catch (InterruptedException ie) {
                 System.out.println("Thread interrupted? Should not happen.");
             }
@@ -54,28 +59,69 @@ public class App {
         }
     }
 
-    public City getCity(int cityId) {
+    public ArrayList<City>  getTopPopulateCitiesInADistrict(int topPopulatedCities, String districtName) {
+        ArrayList<City> cities = new ArrayList<>();
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT Name, CountryCode, District, Population "
-                            + "FROM city "
-                            + "WHERE ID = " + cityId;
+                    "SELECT city.name, city.Population, city.District " +
+                            "FROM city " +
+                            "WHERE city.District = '" + districtName + "' " +
+                            "ORDER BY city.Population DESC " +
+                            "LIMIT " + topPopulatedCities;
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return new employee if valid.
-            // Check one is returned
-            if (rset.next()) {
-                City city = new City();
-                city.population = rset.getInt("Population");
-                city.countryCode = rset.getString("CountryCode");           /* this may need changed to just country and not country code */
+            City city;
+
+            // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
+            while (rset.next()) {
+                city = new City();
+                city.population = rset.getInt("city.Population");
                 city.district = rset.getString("District");
-                city.name = rset.getString("Name");
-                return city;
-            } else
-                return null;
+                city.name = rset.getString("city.name");
+
+                cities.add(city);
+
+            }
+
+            return cities;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
+    public ArrayList<City>  getCity() {
+        ArrayList<City> cities = new ArrayList<>();
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT city.name, country.name, District, city.Population "
+                            + "FROM city join country ON city.CountryCode = country.Code ";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new employee if valid.
+            City city;
+
+            // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
+            while (rset.next()) {
+                city = new City();
+                city.population = rset.getInt("city.Population");
+                city.country = rset.getString("country.name");
+                city.district = rset.getString("District");
+                city.name = rset.getString("city.name");
+
+                cities.add(city);
+
+            }
+
+            return cities;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get city details");
@@ -84,10 +130,23 @@ public class App {
     }
 
 
-    public void displayCity(City city) {
-        if (city != null) {
-            System.out.printf("%-15s %-15s %-15s %-15s %n", "Name", "Country Code", "District", "Population ");
-            System.out.printf("%-15s %-15s %-15s %-15s %n", city.name, city.countryCode, city.district, city.population);
+    public void displayTopCityPopulationInDistrict(ArrayList<City> citties) {
+        if (citties != null) {
+            System.out.printf("%-30s %-30s %-30s %n", "Name", "District", "Population ");
+            for(City city : citties) {
+                System.out.printf("%-30s %-30s %-30s %n", city.name, city.district, city.population);
+            }
+
+        }
+    }
+
+    public void displayCity(ArrayList<City> citties) {
+        if (citties != null) {
+            System.out.printf("%-30s %-30s %-30s %-30s %n", "Name", "Country", "District", "Population ");
+            for(City city : citties) {
+                System.out.printf("%-30s %-30s %-30s %-30s %n", city.name, city.country, city.district, city.population);
+            }
+
         }
     }
 
@@ -231,11 +290,11 @@ public class App {
      *
      * @return An array list containing Capital_City objects.
      */
-    public ArrayList<Capital_City> GetGivenNumberOfCapitalCitiesPopDesc(int numOfCitiesToGet)
+    public ArrayList<City> GetGivenNumberOfCapitalCitiesPopDesc(int numOfCitiesToGet)
     {
 
         // The arraylist storing the capital city information.
-        ArrayList<Capital_City> capitalCitiesInPopDesc = new ArrayList<>();
+        ArrayList<City> capitalCitiesInPopDesc = new ArrayList<>();
 
         try {
             // Creating SQL statement
@@ -246,9 +305,9 @@ public class App {
             // Idk if the limit part of this will work through java, but I can't test it right now.
             String selectString =
                     "SELECT city.Name, city.CountryCode, city.Population"
-                            + "FROM country"
-                            + "INNER JOIN city ON city.ID = country.Capital"
-                            + "ORDER BY Population Desc "
+                            + " FROM country "
+                            + " INNER JOIN city ON country.Capital = city.ID "
+                            + " ORDER BY Population Desc "
                             + "LIMIT " + numOfCitiesToGet;
 
 
@@ -257,11 +316,11 @@ public class App {
             ResultSet resultSet = stmt.executeQuery(selectString);
 
             // Declaring city up here so that it isn't declaring it over and over again.
-            Capital_City capitalCity;
+            City capitalCity;
 
             // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
             while (resultSet.next()) {
-                capitalCity = new Capital_City();
+                capitalCity = new City();
                 capitalCity.name = resultSet.getString("Name");
                 capitalCity.population = resultSet.getInt("Population");
                 capitalCity.countryCode = resultSet.getString("CountryCode");
