@@ -386,9 +386,9 @@ public class App {
 
     public void displayLanguage(ArrayList<Language> LanguagesReport) {
         if (LanguagesReport != null) {
-            System.out.printf(" %-30s %-30s %-30s %n", "Name", "Number", "Percentage");
+            System.out.printf("%-30s %-30s %-30s %n", "Language", "Population", "Percentage");
             for(Language language : LanguagesReport) {
-                System.out.printf(" %-30s %-30s %-30s %n", language.Name, language.Number, language.Percentage);
+                System.out.printf("%-30s %-30s %-30s %n", language.Name, language.Number, language.Percentage);
             }
 
         }

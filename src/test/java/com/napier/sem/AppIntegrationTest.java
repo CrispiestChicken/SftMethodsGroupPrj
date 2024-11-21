@@ -66,4 +66,19 @@ public class AppIntegrationTest {
         ArrayList<City> capitalCitiesPopDesc = app.GetGivenNumberOfCapitalCitiesPopDesc(1);
         assertEquals(capitalCitiesPopDesc.get(0).name,"Seoul");
     }
+
+    /**
+     * Tests if the data collected from the database is what it's meant to be
+     * for the languages given in descending order.
+     */
+    @Test
+    void testLanguageReport()
+    {
+        ArrayList<Language> language = app.LanguageReport();
+        assertEquals(language.get(0).Name,"Chinese");
+        assertEquals(language.get(0).Number,1191843539);
+        assertEquals(language.get(0).Percentage,19.0);
+    }
+
+
 }
