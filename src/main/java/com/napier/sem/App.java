@@ -12,7 +12,7 @@ public class App {
     /**
      * Connect to the MySQL database.
      */
-    public void connect() {
+    public void connect(String location, int delay) {
         try {
             // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -22,18 +22,23 @@ public class App {
         }
 
         int retries = 10;
+        boolean shouldWait = false;
         for (int i = 0; i < retries; ++i) {
             System.out.println("Connecting to database...");
             try {
-                // Wait a bit for db to start
-                Thread.sleep(3000);
+                if (shouldWait) {
+                    // Wait a bit for db to start
+                    Thread.sleep(delay);
+                }
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://"+location+"/world?allowPublicKeyRetrieval=TRUE&useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
             } catch (SQLException sqle) {
                 System.out.println("Failed to connect to database attempt " + Integer.toString(i));
                 System.out.println(sqle.getMessage());
+
+                shouldWait = true;
             } catch (InterruptedException ie) {
                 System.out.println("Thread interrupted? Should not happen.");
             }
@@ -285,11 +290,11 @@ public class App {
      *
      * @return An array list containing Capital_City objects.
      */
-    public ArrayList<Capital_City> GetGivenNumberOfCapitalCitiesPopDesc(int numOfCitiesToGet)
+    public ArrayList<City> GetGivenNumberOfCapitalCitiesPopDesc(int numOfCitiesToGet)
     {
 
         // The arraylist storing the capital city information.
-        ArrayList<Capital_City> capitalCitiesInPopDesc = new ArrayList<>();
+        ArrayList<City> capitalCitiesInPopDesc = new ArrayList<>();
 
         try {
             // Creating SQL statement
@@ -300,9 +305,9 @@ public class App {
             // Idk if the limit part of this will work through java, but I can't test it right now.
             String selectString =
                     "SELECT city.Name, city.CountryCode, city.Population"
-                            + "FROM country"
-                            + "INNER JOIN city ON city.ID = country.Capital"
-                            + "ORDER BY Population Desc "
+                            + " FROM country "
+                            + " INNER JOIN city ON country.Capital = city.ID "
+                            + " ORDER BY Population Desc "
                             + "LIMIT " + numOfCitiesToGet;
 
 
@@ -311,11 +316,11 @@ public class App {
             ResultSet resultSet = stmt.executeQuery(selectString);
 
             // Declaring city up here so that it isn't declaring it over and over again.
-            Capital_City capitalCity;
+            City capitalCity;
 
             // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
             while (resultSet.next()) {
-                capitalCity = new Capital_City();
+                capitalCity = new City();
                 capitalCity.name = resultSet.getString("Name");
                 capitalCity.population = resultSet.getInt("Population");
                 capitalCity.countryCode = resultSet.getString("CountryCode");
