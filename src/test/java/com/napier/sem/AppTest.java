@@ -11,13 +11,17 @@ public class AppTest {
     static App app;
     static City city;
     static Capital_City capitalcity;
+    static Language language;
+    //Initialises before each tests
     @BeforeAll
     static void init() {
         app = new App();
         city = new City();
         capitalcity = new Capital_City();
+        language = new Language();
     }
 
+    //Tests city class
     @Test
     void testCity()
     {
@@ -26,10 +30,9 @@ public class AppTest {
         city.district = "NONE";
         city.population = 10000;
         String cityName = city.name;
-        //app.displayCity(city);
         assertTrue(cityName.equals("Edinburgh"));
     }
-    /*
+    //Tests capital city class
     @Test
     void testCapitalCity()
     {
@@ -38,11 +41,17 @@ public class AppTest {
         capitalcity.countryCode = "SCO";
         capitalcity.population = 10000;
         String cityName = capitalcity.name;
-        app.displayCity(city);
         assertTrue(cityName.equals("Edinburgh"));
     }
-*/
 
+    //Tests lanuage class
+    @Test
+    void testLanguage()
+    {
+        language.Name = "Chinese";
+        String languageName = language.Name;
+        assertTrue(languageName.equals("Chinese"));
+    }
 
 
 }

@@ -59,6 +59,10 @@ public class App {
         }
     }
 
+    /**
+     * This is for getting top populated cities in a district
+     * @return ArrayList<City>
+     */
     public ArrayList<City>  getTopPopulateCitiesInADistrict(int topPopulatedCities, String districtName) {
         ArrayList<City> cities = new ArrayList<>();
         try {
@@ -95,6 +99,10 @@ public class App {
         }
     }
 
+    /**
+     * This gets all the cities
+     * @return ArrayList<City>
+     */
     public ArrayList<City>  getCity() {
         ArrayList<City> cities = new ArrayList<>();
         try {
@@ -130,6 +138,10 @@ public class App {
     }
 
 
+    /**
+     * This displays the top city population in a district
+     *
+     */
     public void displayTopCityPopulationInDistrict(ArrayList<City> citties) {
         if (citties != null) {
             System.out.printf("%-30s %-30s %-30s %n", "Name", "District", "Population ");
@@ -140,6 +152,10 @@ public class App {
         }
     }
 
+    /**
+     * This displays city report
+     *
+     */
     public void displayCity(ArrayList<City> citties) {
         if (citties != null) {
             System.out.printf("%-30s %-30s %-30s %-30s %n", "Name", "Country", "District", "Population ");
@@ -151,7 +167,11 @@ public class App {
     }
 
 
-    public Capital_City getCapCity(int cityId) {
+    /**
+     * This gets the capital city
+     *
+     */
+    /*public Capital_City getCapCity(int cityId) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -177,7 +197,7 @@ public class App {
             System.out.println("Failed to get capital city details");
             return null;
         }
-    }
+    }*/
 
 
     /**
@@ -339,7 +359,12 @@ public class App {
         // Returns the city information to be used as needed.
         return capitalCitiesInPopDesc;
     }
-            //makes the Language report
+
+    /**
+     * This creates a language report
+     *
+     * @return ArrayList<Language>
+     */
     public ArrayList<Language> LanguageReport()
     {
         //new languages array list
@@ -384,7 +409,10 @@ public class App {
         // Returns the city information to be used as needed.
         return LanguagesReport;
     }
-            //displays language report to user
+
+    /**
+     *This displays the language report
+     */
     public void displayLanguage(ArrayList<Language> LanguagesReport) {
         if (LanguagesReport != null) {
             System.out.printf("%-30s %-30s %-30s %n", "Language", "Population", "Percentage");
