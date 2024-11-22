@@ -8,4 +8,5 @@ public class City
     public int population;
     public String countryCode;
     public String district;
+    public String country;
 }

@@ -10,14 +10,16 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AppTest {
     static App app;
     static City city;
-    static Capital_City capitalcity;
+    static Language language;
+    //Initialises before each tests
     @BeforeAll
     static void init() {
         app = new App();
         city = new City();
-        capitalcity = new Capital_City();
+        language = new Language();
     }
 
+    //Tests city class
     @Test
     void testCity()
     {
@@ -26,39 +28,17 @@ public class AppTest {
         city.district = "NONE";
         city.population = 10000;
         String cityName = city.name;
-        app.displayCity(city);
         assertTrue(cityName.equals("Edinburgh"));
     }
-    /*
+
+    //Tests lanuage class
     @Test
-    void testCapitalCity()
+    void testLanguage()
     {
-
-        capitalcity.name = "Edinburgh";
-        capitalcity.countryCode = "SCO";
-        capitalcity.population = 10000;
-        String cityName = capitalcity.name;
-        app.displayCity(city);
-        assertTrue(cityName.equals("Edinburgh"));
+        language.Name = "Chinese";
+        String languageName = language.Name;
+        assertTrue(languageName.equals("Chinese"));
     }
-*/
 
 
-    /*
-    /**
-     * Tests if the data collected from the database is what it's meant to be
-     * for the all cities population descending.
-     */
-
-    /*
-    This doesn't work at the moment because I can't connect to the database yet in the tests I will fix this
-    for code review 3.
-    @Test
-    void TestCorrectCitiesPopDesc()
-    {
-        ArrayList<City> CitiesPopDesc = app.GetAllCitiesPopDesc();
-
-        assertEquals(CitiesPopDesc.get(0).name,"Mumbai (Bombay)");
-    }
-    */
 }
