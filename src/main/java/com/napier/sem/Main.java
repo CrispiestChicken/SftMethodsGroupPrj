@@ -18,13 +18,15 @@ public class Main {
 
         a.displayCity(city);*/
 
-        ArrayList<City> cityPopulationInADistrict = a.getTopPopulateCitiesInADistrict(2, "Zuid-Holland");
+        /*ArrayList<City> cityPopulationInADistrict = a.getTopPopulateCitiesInADistrict(2, "Zuid-Holland");
         ArrayList<City> cappopdesc = a.GetGivenNumberOfCapitalCitiesPopDesc(1);
         a.displayTopCityPopulationInDistrict(cityPopulationInADistrict);
         ArrayList<Language> LanguageReport = a.LanguageReport();
         a.displayLanguage(LanguageReport);
         a.displayCity(cappopdesc);
+        ArrayList<City> capPopDestRep = a.GetAllCapitalCitiesPopDesc();
+        a.displayCity(capPopDestRep);
         // Disconnect from database
-        a.disconnect();
+        a.disconnect();*/
     }
 }

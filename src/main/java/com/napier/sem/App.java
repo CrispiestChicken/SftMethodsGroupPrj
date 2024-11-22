@@ -257,9 +257,9 @@ public class App {
      *
      * @return An array list containing Capital_City objects.
      */
-    public ArrayList<Capital_City> GetAllCapitalCitiesPopDesc() {
+    public ArrayList<City> GetAllCapitalCitiesPopDesc() {
         // The arraylist storing all the capital city information.
-        ArrayList<Capital_City> capitalCitiesInPopDesc = new ArrayList<>();
+        ArrayList<City> capitalCitiesInPopDesc = new ArrayList<>();
 
         try {
             // Creating SQL statement
@@ -267,22 +267,22 @@ public class App {
 
 
             // String for SQL statement
-            String selectString =
-                    "SELECT city.Name, city.CountryCode, city.Population"
-                            + "FROM country"
-                            + "INNER JOIN city ON city.ID = country.Capital"
-                            + "ORDER BY Population Desc ;";
+                    String selectString =
+                    "SELECT city.Name, city.CountryCode, city.Population " +
+                            "FROM country " +
+                            "INNER JOIN city ON country.Capital = city.ID " +
+                            "ORDER BY city.Population DESC";
 
 
             // Execute SQL statement
             ResultSet resultSet = stmt.executeQuery(selectString);
 
             // Declaring city up here so that it isn't declaring it over and over again.
-            Capital_City capitalCity;
+            City capitalCity;
 
             // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
             while (resultSet.next()) {
-                capitalCity = new Capital_City();
+                capitalCity = new City();
                 capitalCity.name = resultSet.getString("Name");
                 capitalCity.population = resultSet.getInt("Population");
                 capitalCity.countryCode = resultSet.getString("CountryCode");

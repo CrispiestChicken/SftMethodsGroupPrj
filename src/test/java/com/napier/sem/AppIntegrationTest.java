@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class AppIntegrationTest {
     static App app;
     static City city;
-    static Capital_City capitalcity;
     @BeforeAll
     static void init() {
         app = new App();
@@ -80,5 +79,16 @@ public class AppIntegrationTest {
         assertEquals(language.get(0).Percentage,19.0);
     }
 
+    /**
+     * Tests if the data collected from the database is what it's meant to be
+     * for the languages given in descending order.
+     */
+    @Test
+    void testGetAllCapitalCitiesPopDesc()
+    {
+        ArrayList<City> topcapcities = app.GetAllCapitalCitiesPopDesc();
+        assertEquals(topcapcities.get(0).name,"Seoul");
+        assertEquals(topcapcities.get(0).population,9981619);
+    }
 
 }
