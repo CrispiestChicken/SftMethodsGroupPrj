@@ -80,6 +80,39 @@ public class AppIntegrationTest {
     }
 
     /**
+     * This test is for a display function
+     * .
+     */
+    @Test
+    void testDisplayTopCityPopulationInDistrict()
+    {
+        ArrayList<City> yopPopCitieInAdistrict = app.getTopPopulateCitiesInADistrict(2, "Zuid-Holland");
+        app.displayTopCityPopulationInDistrict(yopPopCitieInAdistrict);
+    }
+
+    /**
+     * This test is for a display function
+     * .
+     */
+    @Test
+    void testDisplayCity()
+    {
+        ArrayList<City> testCity = app.getCity();
+        app.displayCity(testCity);
+    }
+
+    /**
+     * This test is for a display function
+     * .
+     */
+    @Test
+    void testDisplayLanguage()
+    {
+        ArrayList<Language> language = app.LanguageReport();
+        app.displayLanguage(language);
+    }
+
+    /**
      * Tests if the data collected from the database is what it's meant to be
      * for the languages given in descending order.
      */
