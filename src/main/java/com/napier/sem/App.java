@@ -565,7 +565,7 @@ public class App {
         try {
             // String for SQL statement
             String selectString =
-                    "SELECT city.Name, city.CountryCode, city.Population " +
+                    "SELECT city.Name AS Name, city.CountryCode AS CountryCode, city.Population AS Population " +
                             "FROM country " +
                             "INNER JOIN city ON city.ID = country.Capital " +
                             "WHERE country.Continent = " + continent +
