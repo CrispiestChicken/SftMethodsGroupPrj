@@ -165,9 +165,27 @@ public class App {
         return countries;
     }
 
-    private ArrayList<Population> getPopulationDataFromResultSet(ResultSet results)
+    private ArrayList<Population> getPopulationDataFromResultSet(ResultSet results) throws Exception
     {
-        return null;
+        ArrayList<Population> populationReport = new ArrayList<>();
+
+        // Declaring population up here so that it isn't declaring it over and over again.
+        Population population;
+
+        // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
+        while (results.next()) {
+            population = new Population();
+            population.AreaName = results.getString("AreaName");
+            population.PopulationOfArea = results.getInt("AreaPopulation");
+            population.PopulationOfAreaInCities = results.getInt("AreaCityPopulation");
+            population.PopulationOfAreaInCitiesPercent = results.getDouble("AreaCityPopulationPercent");
+            population.PopulationOfAreaNotInCities = results.getInt("AreaNotInCityPopulation");
+            population.PopulationOfAreaNotInCitiesPercent = results.getDouble("AreaNotInCityPopulationPercent");
+
+            populationReport.add(population);
+        }
+
+        return populationReport;
     }
 
 
