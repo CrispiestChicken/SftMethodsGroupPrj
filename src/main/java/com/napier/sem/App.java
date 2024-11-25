@@ -63,24 +63,15 @@ public class App {
      * Runs a given query and returns the result.
      * @param query The query you want to run.
      * @return The results of the query.
+     * @throws Exception Probably from the sql query failing.
      */
-    private ResultSet runQuery(String query)
-    {
-        ResultSet rset = null;
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
+    private ResultSet runQuery(String query) throws Exception {
 
-            // Execute SQL statement
-            rset = stmt.executeQuery(query);
-        }
-        catch (Exception e)
-        {
-            System.out.println("Failed to execute query:" + e.getMessage());
-        }
+        // Create an SQL statement
+        Statement stmt = con.createStatement();
 
-        return rset;
+        // Execute SQL statement
+        return stmt.executeQuery(query);
     }
 
 
@@ -90,18 +81,20 @@ public class App {
      */
     public ArrayList<City>  getTopPopulateCitiesInADistrict(int topPopulatedCities, String districtName) {
         ArrayList<City> cities = new ArrayList<>();
-        try {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
+
+        try
+        {
             // Create string for SQL statement
             String strSelect =
-                    "SELECT city.name, city.Population, city.District " +
-                            "FROM city " +
-                            "WHERE city.District = '" + districtName + "' " +
-                            "ORDER BY city.Population DESC " +
-                            "LIMIT " + topPopulatedCities;
+                "SELECT city.name, city.Population, city.District " +
+                    "FROM city " +
+                    "WHERE city.District = '" + districtName + "' " +
+                    "ORDER BY city.Population DESC " +
+                    "LIMIT " + topPopulatedCities;
+
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = runQuery(strSelect);
+
             // Return new employee if valid.
             City city;
 
@@ -113,11 +106,12 @@ public class App {
                 city.name = rset.getString("city.name");
 
                 cities.add(city);
-
             }
 
             return cities;
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             System.out.println(e.getMessage());
             System.out.println("Failed to get city details");
             return null;
@@ -131,14 +125,13 @@ public class App {
     public ArrayList<City>  getCity() {
         ArrayList<City> cities = new ArrayList<>();
         try {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
                     "SELECT city.name, country.name, District, city.Population "
                             + "FROM city join country ON city.CountryCode = country.Code ";
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = runQuery(strSelect);
+
             // Return new employee if valid.
             City city;
 
@@ -235,10 +228,6 @@ public class App {
         ArrayList<City> CitiesInPopDesc = new ArrayList<>();
 
         try {
-            // Creating SQL statement
-            Statement stmt = con.createStatement();
-
-
             // String for SQL statement
             String selectString =
                     "SELECT Name, CountryCode, District, Population "
@@ -247,7 +236,7 @@ public class App {
 
 
             // Execute SQL statement
-            ResultSet resultSet = stmt.executeQuery(selectString);
+            ResultSet resultSet = runQuery(selectString);
 
             // Declaring city up here so that it isn't declaring it over and over again.
             City city;
@@ -287,10 +276,6 @@ public class App {
         ArrayList<City> capitalCitiesInPopDesc = new ArrayList<>();
 
         try {
-            // Creating SQL statement
-            Statement stmt = con.createStatement();
-
-
             // String for SQL statement
                     String selectString =
                     "SELECT city.Name, city.CountryCode, city.Population " +
@@ -300,7 +285,7 @@ public class App {
 
 
             // Execute SQL statement
-            ResultSet resultSet = stmt.executeQuery(selectString);
+            ResultSet resultSet = runQuery(selectString);
 
             // Declaring city up here so that it isn't declaring it over and over again.
             City capitalCity;
@@ -337,17 +322,11 @@ public class App {
      */
     public ArrayList<City> GetGivenNumberOfCapitalCitiesPopDesc(int numOfCitiesToGet)
     {
-
         // The arraylist storing the capital city information.
         ArrayList<City> capitalCitiesInPopDesc = new ArrayList<>();
 
         try {
-            // Creating SQL statement
-            Statement stmt = con.createStatement();
-
-
             // String for SQL statement
-            // Idk if the limit part of this will work through java, but I can't test it right now.
             String selectString =
                     "SELECT city.Name, city.CountryCode, city.Population"
                             + " FROM country "
@@ -358,7 +337,7 @@ public class App {
 
 
             // Execute SQL statement
-            ResultSet resultSet = stmt.executeQuery(selectString);
+            ResultSet resultSet = runQuery(selectString);
 
             // Declaring city up here so that it isn't declaring it over and over again.
             City capitalCity;
@@ -395,8 +374,6 @@ public class App {
         //new languages array list
         ArrayList<Language> LanguagesReport = new ArrayList<>();
         try {
-            //makes SQL statement
-            Statement stmt = con.createStatement();
             String selectString =
                     "SELECT cl.Language, "          //makes a table with summing up populations from all countries aswell as the number of speakers of each language in each country to work out global percentage from largest to smallest
                             + "       SUM(c.Population * (cl.Percentage / 100)) AS TotalSpeakers, "
@@ -407,7 +384,7 @@ public class App {
                             + "GROUP BY cl.Language "
                             + "ORDER BY TotalSpeakers DESC;";
 
-            ResultSet resultSet = stmt.executeQuery(selectString);
+            ResultSet resultSet = runQuery(selectString);
 
             // Declaring language up here so that it isn't declaring it over and over again.
             Language language;
