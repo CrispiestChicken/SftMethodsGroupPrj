@@ -96,12 +96,27 @@ public class App {
         }
 
         return cities;
-
     }
 
-    private ArrayList<City> getCapitalCityDataFromResultSet(ResultSet results)
+    private ArrayList<City> getCapitalCityDataFromResultSet(ResultSet results) throws Exception
     {
-        return null;
+
+        ArrayList<City> capitalCities = new ArrayList<City>();
+
+        // Declaring city up here so that it isn't declaring it over and over again.
+        City capitalCity;
+
+        // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
+        while (results.next()) {
+            capitalCity = new City();
+            capitalCity.name = results.getString("Name");
+            capitalCity.population = results.getInt("Population");
+            capitalCity.countryCode = results.getString("CountryCode");
+
+            capitalCities.add(capitalCity);
+        }
+
+        return capitalCities;
     }
 
     private ArrayList<Language> getLanguageDataFromResultSet(ResultSet results)
@@ -343,7 +358,6 @@ public class App {
                 capitalCity.countryCode = resultSet.getString("CountryCode");
 
                 capitalCitiesInPopDesc.add(capitalCity);
-
             }
         }
         // If any error happens.
