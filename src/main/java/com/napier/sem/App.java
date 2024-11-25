@@ -556,4 +556,36 @@ public class App {
     }
 
 
+    /**
+     * Gets all the capital cities in a given continent ordered from the highest population to smallest.
+     * @param continent The continent you want to get the capital cities from.
+     * @return An array list containing Capital_City objects.
+     */
+    public ArrayList<City> GetAllCapitalCitiesInContinentPopDesc(String continent) {
+        try {
+            // String for SQL statement
+            String selectString =
+                    "SELECT city.Name, city.CountryCode, city.Population " +
+                            "FROM country " +
+                            "INNER JOIN city ON city.ID = country.Capital " +
+                            "WHERE country.Continent = " + continent +
+                            "ORDER BY Population Desc;";
+
+
+            // Execute SQL statement
+            ResultSet resultSet = runQuery(selectString);
+
+            // Takes all the data from the result and formats it into an ArrayList of cities.
+            return getCapitalCityDataFromResultSet(resultSet);
+
+        }
+        // If any error happens.
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
+
 }
