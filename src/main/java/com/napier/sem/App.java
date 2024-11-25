@@ -119,9 +119,26 @@ public class App {
         return capitalCities;
     }
 
-    private ArrayList<Language> getLanguageDataFromResultSet(ResultSet results)
+    private ArrayList<Language> getLanguageDataFromResultSet(ResultSet results) throws Exception
     {
-        return null;
+
+        ArrayList<Language> languagesReport = new ArrayList<>();
+
+        // Declaring language up here so that it isn't declaring it over and over again.
+        Language language;
+
+        // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
+        while (results.next()) {
+            language = new Language();
+            language.Name = results.getString("Language");
+            language.Number = results.getInt("TotalSpeakers");
+            language.Percentage = results.getInt("WorldPercentage");
+
+            languagesReport.add(language);
+
+        }
+
+        return languagesReport;
     }
 
     private ArrayList<Country> getCountryDataFromResultSet(ResultSet results)
