@@ -75,6 +75,32 @@ public class App {
     }
 
 
+    private ArrayList<City> getCityDataFromResultSet(ResultSet results)
+    {
+        return null;
+    }
+
+    private ArrayList<City> getCapitalCityDataFromResultSet(ResultSet results)
+    {
+        return null;
+    }
+
+    private ArrayList<Language> getLanguageDataFromResultSet(ResultSet results)
+    {
+        return null;
+    }
+
+    private <T> ArrayList<T> getCountryDataFromResultSet(ResultSet results)
+    {
+        return null;
+    }
+
+    private <T> ArrayList<T> getPopulationDataFromResultSet(ResultSet results)
+    {
+        return null;
+    }
+
+
     /**
      * This is for getting top populated cities in a district
      * @return ArrayList<City>
