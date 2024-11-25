@@ -60,6 +60,31 @@ public class App {
     }
 
     /**
+     * Runs a given query and returns the result.
+     * @param query The query you want to run.
+     * @return The results of the query.
+     */
+    private ResultSet runQuery(String query)
+    {
+        ResultSet rset = null;
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            rset = stmt.executeQuery(query);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Failed to execute query:" + e.getMessage());
+        }
+
+        return rset;
+    }
+
+
+    /**
      * This is for getting top populated cities in a district
      * @return ArrayList<City>
      */
@@ -142,10 +167,10 @@ public class App {
      * This displays the top city population in a district
      *
      */
-    public void displayTopCityPopulationInDistrict(ArrayList<City> citties) {
-        if (citties != null) {
+    public void displayTopCityPopulationInDistrict(ArrayList<City> cities) {
+        if (cities != null) {
             System.out.printf("%-30s %-30s %-30s %n", "Name", "District", "Population ");
-            for(City city : citties) {
+            for(City city : cities) {
                 System.out.printf("%-30s %-30s %-30s %n", city.name, city.district, city.population);
             }
 
@@ -156,10 +181,10 @@ public class App {
      * This displays city report
      *
      */
-    public void displayCity(ArrayList<City> citties) {
-        if (citties != null) {
+    public void displayCity(ArrayList<City> cities) {
+        if (cities != null) {
             System.out.printf("%-30s %-30s %-30s %-30s %n", "Name", "Country", "District", "Population ");
-            for(City city : citties) {
+            for(City city : cities) {
                 System.out.printf("%-30s %-30s %-30s %-30s %n", city.name, city.country, city.district, city.population);
             }
 
