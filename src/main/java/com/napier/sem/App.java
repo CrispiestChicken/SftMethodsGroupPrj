@@ -75,6 +75,12 @@ public class App {
     }
 
 
+    /**
+     *
+     * @param results A ResultSet that you get from executing a query.
+     * @return An ArrayList containing City objects that contains the data for each city gotten from the result set.
+     * @throws Exception Makes it so the person using this method has to deal with exceptions.
+     */
     private ArrayList<City> getCityDataFromResultSet(ResultSet results) throws Exception
     {
 
@@ -98,6 +104,11 @@ public class App {
         return cities;
     }
 
+    /**
+     * @param results A ResultSet that you get from executing a query.
+     * @return An ArrayList containing City objects that contains the data for each capital city gotten from the result set.
+     * @throws Exception Makes it so the person using this method has to deal with exceptions.
+     */
     private ArrayList<City> getCapitalCityDataFromResultSet(ResultSet results) throws Exception
     {
 
@@ -119,6 +130,11 @@ public class App {
         return capitalCities;
     }
 
+    /**
+     * @param results A ResultSet that you get from executing a query.
+     * @return An ArrayList containing Language objects that contains the data for each language gotten from the result set.
+     * @throws Exception Makes it so the person using this method has to deal with exceptions.
+     */
     private ArrayList<Language> getLanguageDataFromResultSet(ResultSet results) throws Exception
     {
 
@@ -141,6 +157,11 @@ public class App {
         return languagesReport;
     }
 
+    /**
+     * @param results A ResultSet that you get from executing a query.
+     * @return An ArrayList containing Country objects that contains the data for each country gotten from the result set.
+     * @throws Exception Makes it so the person using this method has to deal with exceptions.
+     */
     private ArrayList<Country> getCountryDataFromResultSet(ResultSet results) throws Exception
     {
         ArrayList<Country> countries = new ArrayList<>();
@@ -165,6 +186,11 @@ public class App {
         return countries;
     }
 
+    /**
+     * @param results A ResultSet that you get from executing a query.
+     * @return An ArrayList containing Population objects that contains the data for each population row gotten from the result set.
+     * @throws Exception Makes it so the person using this method has to deal with exceptions.
+     */
     private ArrayList<Population> getPopulationDataFromResultSet(ResultSet results) throws Exception
     {
         ArrayList<Population> populationReport = new ArrayList<>();
