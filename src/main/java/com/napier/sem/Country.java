@@ -9,6 +9,6 @@ public class Country
     public String CountryName;
     public String Continent;
     public String Region;
-    public String Population;
+    public int Population;
     public String CapitalCity;
 }

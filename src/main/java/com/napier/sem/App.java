@@ -101,7 +101,7 @@ public class App {
     private ArrayList<City> getCapitalCityDataFromResultSet(ResultSet results) throws Exception
     {
 
-        ArrayList<City> capitalCities = new ArrayList<City>();
+        ArrayList<City> capitalCities = new ArrayList<>();
 
         // Declaring city up here so that it isn't declaring it over and over again.
         City capitalCity;
@@ -141,9 +141,28 @@ public class App {
         return languagesReport;
     }
 
-    private ArrayList<Country> getCountryDataFromResultSet(ResultSet results)
+    private ArrayList<Country> getCountryDataFromResultSet(ResultSet results) throws Exception
     {
-        return null;
+        ArrayList<Country> countries = new ArrayList<>();
+
+        // Declaring country up here so that it isn't declaring it over and over again.
+        Country country;
+
+        // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
+        while (results.next()) {
+            country = new Country();
+            country.CountryCode = results.getString("Code");
+            country.CountryName = results.getString("Name");
+            country.Continent = results.getString("Continent");
+            country.Region = results.getString("Region");
+            country.Population = results.getInt("Population");
+            country.CapitalCity = results.getString("Capital");
+
+            countries.add(country);
+
+        }
+
+        return countries;
     }
 
     private ArrayList<Population> getPopulationDataFromResultSet(ResultSet results)
