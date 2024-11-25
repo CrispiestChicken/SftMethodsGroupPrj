@@ -35,7 +35,7 @@ public class App {
                 System.out.println("Successfully connected");
                 break;
             } catch (SQLException sqle) {
-                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
+                System.out.println("Failed to connect to database attempt " + i);
                 System.out.println(sqle.getMessage());
 
                 shouldWait = true;
@@ -219,36 +219,24 @@ public class App {
      * This is for getting top populated cities in a district
      * @return ArrayList<City>
      */
-    public ArrayList<City>  getTopPopulateCitiesInADistrict(int topPopulatedCities, String districtName) {
-        ArrayList<City> cities = new ArrayList<>();
-
+    public ArrayList<City>  getTopPopulateCitiesInADistrict(int topPopulatedCities, String districtName)
+    {
         try
         {
             // Create string for SQL statement
             String strSelect =
-                "SELECT city.name, city.Population, city.District " +
+                "SELECT Name, Population, District, CountryCode " +
                     "FROM city " +
-                    "WHERE city.District = '" + districtName + "' " +
-                    "ORDER BY city.Population DESC " +
+                    "WHERE District = '" + districtName + "' " +
+                    "ORDER BY Population DESC " +
                     "LIMIT " + topPopulatedCities;
 
             // Execute SQL statement
             ResultSet rset = runQuery(strSelect);
 
-            // Return new employee if valid.
-            City city;
+            // Takes all the data from the result and formats it into an ArrayList of cities.
+            return getCityDataFromResultSet(rset);
 
-            // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
-            while (rset.next()) {
-                city = new City();
-                city.population = rset.getInt("city.Population");
-                city.district = rset.getString("District");
-                city.name = rset.getString("city.name");
-
-                cities.add(city);
-            }
-
-            return cities;
         }
         catch (Exception e)
         {
@@ -363,10 +351,8 @@ public class App {
      *
      * @return An array list containing City objects.
      */
-    public ArrayList<City> GetAllCitiesPopDesc() {
-        // The arraylist storing all the city information.
-        ArrayList<City> CitiesInPopDesc = new ArrayList<>();
-
+    public ArrayList<City> GetAllCitiesPopDesc()
+    {
         try {
             // String for SQL statement
             String selectString =
@@ -378,20 +364,9 @@ public class App {
             // Execute SQL statement
             ResultSet resultSet = runQuery(selectString);
 
-            // Declaring city up here so that it isn't declaring it over and over again.
-            City city;
+            // Takes all the data from the result and formats it into an ArrayList of cities.
+            return getCityDataFromResultSet(resultSet);
 
-            // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
-            while (resultSet.next()) {
-                city = new City();
-                city.population = resultSet.getInt("Population");
-                city.countryCode = resultSet.getString("CountryCode");
-                city.district = resultSet.getString("District");
-                city.name = resultSet.getString("Name");
-
-                CitiesInPopDesc.add(city);
-
-            }
         }
         // If any error happens.
         catch (Exception e) {
@@ -399,9 +374,6 @@ public class App {
             System.out.println("Failed to get city details");
             return null;
         }
-
-        // Returns the city information to be used as needed.
-        return CitiesInPopDesc;
     }
 
 
@@ -411,14 +383,12 @@ public class App {
      *
      * @return An array list containing Capital_City objects.
      */
-    public ArrayList<City> GetAllCapitalCitiesPopDesc() {
-        // The arraylist storing all the capital city information.
-        ArrayList<City> capitalCitiesInPopDesc = new ArrayList<>();
-
+    public ArrayList<City> GetAllCapitalCitiesPopDesc()
+    {
         try {
             // String for SQL statement
                     String selectString =
-                    "SELECT city.Name, city.CountryCode, city.Population " +
+                    "SELECT city.Name AS Name, city.CountryCode AS CountryCode, city.Population AS Population " +
                             "FROM country " +
                             "INNER JOIN city ON country.Capital = city.ID " +
                             "ORDER BY city.Population DESC";
@@ -427,18 +397,9 @@ public class App {
             // Execute SQL statement
             ResultSet resultSet = runQuery(selectString);
 
-            // Declaring city up here so that it isn't declaring it over and over again.
-            City capitalCity;
+            // Takes all the data from the result and formats it into an ArrayList of cities.
+            return getCapitalCityDataFromResultSet(resultSet);
 
-            // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
-            while (resultSet.next()) {
-                capitalCity = new City();
-                capitalCity.name = resultSet.getString("Name");
-                capitalCity.population = resultSet.getInt("Population");
-                capitalCity.countryCode = resultSet.getString("CountryCode");
-
-                capitalCitiesInPopDesc.add(capitalCity);
-            }
         }
         // If any error happens.
         catch (Exception e) {
@@ -446,9 +407,6 @@ public class App {
             System.out.println("Failed to get city details");
             return null;
         }
-
-        // Returns the city information to be used as needed.
-        return capitalCitiesInPopDesc;
     }
 
 
@@ -461,36 +419,21 @@ public class App {
      */
     public ArrayList<City> GetGivenNumberOfCapitalCitiesPopDesc(int numOfCitiesToGet)
     {
-        // The arraylist storing the capital city information.
-        ArrayList<City> capitalCitiesInPopDesc = new ArrayList<>();
-
         try {
             // String for SQL statement
             String selectString =
-                    "SELECT city.Name, city.CountryCode, city.Population"
+                    "SELECT city.Name AS Name, city.CountryCode AS CountryCode, city.Population AS Population"
                             + " FROM country "
                             + " INNER JOIN city ON country.Capital = city.ID "
                             + " ORDER BY Population Desc "
                             + "LIMIT " + numOfCitiesToGet;
 
-
-
             // Execute SQL statement
             ResultSet resultSet = runQuery(selectString);
 
-            // Declaring city up here so that it isn't declaring it over and over again.
-            City capitalCity;
+            // Takes all the data from the result and formats it into an ArrayList of cities.
+            return getCapitalCityDataFromResultSet(resultSet);
 
-            // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
-            while (resultSet.next()) {
-                capitalCity = new City();
-                capitalCity.name = resultSet.getString("Name");
-                capitalCity.population = resultSet.getInt("Population");
-                capitalCity.countryCode = resultSet.getString("CountryCode");
-
-                capitalCitiesInPopDesc.add(capitalCity);
-
-            }
         }
         // If any error happens.
         catch (Exception e) {
@@ -498,9 +441,6 @@ public class App {
             System.out.println("Failed to get city details");
             return null;
         }
-
-        // Returns the city information to be used as needed.
-        return capitalCitiesInPopDesc;
     }
 
     /**
@@ -510,8 +450,6 @@ public class App {
      */
     public ArrayList<Language> LanguageReport()
     {
-        //new languages array list
-        ArrayList<Language> LanguagesReport = new ArrayList<>();
         try {
             String selectString =
                     "SELECT cl.Language, "          //makes a table with summing up populations from all countries aswell as the number of speakers of each language in each country to work out global percentage from largest to smallest
@@ -525,19 +463,8 @@ public class App {
 
             ResultSet resultSet = runQuery(selectString);
 
-            // Declaring language up here so that it isn't declaring it over and over again.
-            Language language;
-
-            // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
-            while (resultSet.next()) {
-                language = new Language();
-                language.Name = resultSet.getString("Language");
-                language.Number = resultSet.getInt("TotalSpeakers");
-                language.Percentage = resultSet.getInt("WorldPercentage");
-
-                LanguagesReport.add(language);
-
-            }
+            // Takes all the data from the result and formats it into an ArrayList of languages.
+            return getLanguageDataFromResultSet(resultSet);
 
         }
         // If any error happens.
@@ -546,9 +473,6 @@ public class App {
             System.out.println("Failed to get language report");
             return null;
         }
-
-        // Returns the city information to be used as needed.
-        return LanguagesReport;
     }
 
     /**
