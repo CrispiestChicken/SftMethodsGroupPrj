@@ -75,9 +75,28 @@ public class App {
     }
 
 
-    private ArrayList<City> getCityDataFromResultSet(ResultSet results)
+    private ArrayList<City> getCityDataFromResultSet(ResultSet results) throws Exception
     {
-        return null;
+
+        ArrayList<City> cities = new ArrayList<>();
+
+        // Declaring city up here so that it isn't declaring it over and over again.
+        City city;
+
+
+        // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
+        while (results.next()) {
+            city = new City();
+            city.population = results.getInt("Population");
+            city.countryCode = results.getString("CountryCode");
+            city.district = results.getString("District");
+            city.name = results.getString("Name");
+
+            cities.add(city);
+        }
+
+        return cities;
+
     }
 
     private ArrayList<City> getCapitalCityDataFromResultSet(ResultSet results)
@@ -90,12 +109,12 @@ public class App {
         return null;
     }
 
-    private <T> ArrayList<T> getCountryDataFromResultSet(ResultSet results)
+    private ArrayList<Country> getCountryDataFromResultSet(ResultSet results)
     {
         return null;
     }
 
-    private <T> ArrayList<T> getPopulationDataFromResultSet(ResultSet results)
+    private ArrayList<Population> getPopulationDataFromResultSet(ResultSet results)
     {
         return null;
     }
