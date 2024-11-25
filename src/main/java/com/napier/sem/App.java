@@ -522,4 +522,38 @@ public class App {
     }
 
 
+    /**
+     * Gets given number of capital cities in a given region ordered from the highest population to smallest.
+     * @param region The region you want to get the capital cities from.
+     * @param numOfCapCities The number of cities to get.
+     * @return An array list containing Capital_City objects.
+     */
+    public ArrayList<City> GetGivenNumOfCapitalCitiesInRegionPopDesc(String region, int numOfCapCities) {
+        try {
+            // String for SQL statement
+            String selectString =
+                    "SELECT city.Name, city.CountryCode, city.Population " +
+                            "FROM country " +
+                            "INNER JOIN city ON city.ID = country.Capital " +
+                            "WHERE country.Region = " + region +
+                            "ORDER BY Population Desc " +
+                            "LIMIT " + numOfCapCities;
+
+            // Execute SQL statement
+            ResultSet resultSet = runQuery(selectString);
+
+            // Takes all the data from the result and formats it into an ArrayList of cities.
+            return getCapitalCityDataFromResultSet(resultSet);
+
+        }
+        // If any error happens.
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+
+    }
+
+
 }
