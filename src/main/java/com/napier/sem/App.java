@@ -630,12 +630,12 @@ public class App {
         try {
             // String for SQL statement
             String selectString =
-                    "SELECT co.Continent AS Continent, " +
-                    "    SUM(co.Population) AS TotalPopulation, " +
-                    "    SUM(cip.CityPopulation) AS CityPopulation, " +
-                    "    SUM(co.Population) - SUM(cip.CityPopulation) AS NonCityPopulation, " +
-                    "    SUM(cip.CityPopulation) / SUM(co.Population) * 100 AS PercentOfPopulationInCities, " +
-                    "    (SUM(co.Population) - SUM(cip.CityPopulation)) / SUM(co.Population) * 100 AS PercentOfPopulationNotInCities " +
+                    "SELECT co.Continent AS AreaName, " +
+                    "    SUM(co.Population) AS AreaPopulation, " +
+                    "    SUM(cip.CityPopulation) AS AreaCityPopulation, " +
+                    "    SUM(co.Population) - SUM(cip.CityPopulation) AS AreaNonInCityPopulation, " +
+                    "    SUM(cip.CityPopulation) / SUM(co.Population) * 100 AS AreaCityPopulationPercent, " +
+                    "    (SUM(co.Population) - SUM(cip.CityPopulation)) / SUM(co.Population) * 100 AS AreaNotInCityPopulationPercent " +
                     "FROM country co " +
                     "LEFT JOIN (" +
                     "    SELECT CountryCode, SUM(Population) AS CityPopulation " +
