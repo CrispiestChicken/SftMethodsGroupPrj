@@ -643,7 +643,7 @@ public class App {
                     "    GROUP BY CountryCode) cip " +
                     "    ON co.Code = cip.CountryCode " +
                     "GROUP BY co.Continent " +
-                    "ORDER BY TotalPopulation DESC;";
+                    "ORDER BY AreaName DESC;";
 
 
             // Execute SQL statement
