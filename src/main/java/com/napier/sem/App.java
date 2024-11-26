@@ -663,4 +663,46 @@ public class App {
     }
 
 
+    /**
+     * Gets the total population of every region as well as the population
+     * in and out of cities with percentages for each.
+     * @return An array list containing Population objects 1 for each region.
+     */
+    public ArrayList<Population> GetPopulationReportOfAllRegionsTotalPopDesc() {
+        try {
+            // String for SQL statement
+            String selectString =
+                    "SELECT co.Region AS AreaName, " +
+                            "    SUM(co.Population) AS AreaPopulation, " +
+                            "    SUM(cip.CityPopulation) AS AreaCityPopulation, " +
+                            "    SUM(co.Population) - SUM(cip.CityPopulation) AS AreaNotInCityPopulation, " +
+                            "    SUM(cip.CityPopulation) / SUM(co.Population) * 100 AS AreaCityPopulationPercent, " +
+                            "    (SUM(co.Population) - SUM(cip.CityPopulation)) / SUM(co.Population) * 100 AS AreaNotInCityPopulationPercent " +
+                            "FROM country co " +
+                            "LEFT JOIN (" +
+                            "    SELECT CountryCode, SUM(Population) AS CityPopulation " +
+                            "    FROM city " +
+                            "    GROUP BY CountryCode) cip " +
+                            "    ON co.Code = cip.CountryCode " +
+                            "GROUP BY co.Region " +
+                            "ORDER BY AreaPopulation DESC;";
+
+
+            // Execute SQL statement
+            ResultSet resultSet = runQuery(selectString);
+
+            // Takes all the data from the result and formats it into an ArrayList of Population.
+            return getPopulationDataFromResultSet(resultSet);
+
+        }
+        // If any error happens.
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get Population data");
+            return null;
+        }
+
+    }
+
+
 }
