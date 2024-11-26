@@ -381,7 +381,7 @@ public class App {
     /**
      * Gets all the capital cities ordered from the highest population to smallest.
      *
-     * @return An array list containing Capital_City objects.
+     * @return An array list containing City objects.
      */
     public ArrayList<City> GetAllCapitalCitiesPopDesc()
     {
@@ -415,7 +415,7 @@ public class App {
     /**
      * Gets a given number Cities ordered from the highest population to smallest.
      *
-     * @return An array list containing Capital_City objects.
+     * @return An array list containing City objects.
      */
     public ArrayList<City> GetGivenNumberOfCapitalCitiesPopDesc(int numOfCitiesToGet)
     {
@@ -492,7 +492,7 @@ public class App {
     /**
      * Gets all the capital cities in a given region ordered from the highest population to smallest.
      * @param region The region you want to get the capital cities from.
-     * @return An array list containing Capital_City objects.
+     * @return An array list containing City objects.
      */
     public ArrayList<City> GetAllCapitalCitiesInRegionPopDesc(String region) {
         try {
@@ -526,7 +526,7 @@ public class App {
      * Gets given number of capital cities in a given region ordered from the highest population to smallest.
      * @param region The region you want to get the capital cities from.
      * @param numOfCapCities The number of cities to get.
-     * @return An array list containing Capital_City objects.
+     * @return An array list containing City objects.
      */
     public ArrayList<City> GetGivenNumOfCapitalCitiesInRegionPopDesc(String region, int numOfCapCities) {
         try {
@@ -559,7 +559,7 @@ public class App {
     /**
      * Gets all the capital cities in a given continent ordered from the highest population to smallest.
      * @param continent The continent you want to get the capital cities from.
-     * @return An array list containing Capital_City objects.
+     * @return An array list containing City objects.
      */
     public ArrayList<City> GetAllCapitalCitiesInContinentPopDesc(String continent) {
         try {
@@ -591,7 +591,7 @@ public class App {
     /**
      * Gets all the cities in a given continent ordered from the highest population to smallest.
      * @param continent The continent you want to get the cities from.
-     * @return An array list containing Capital_City objects.
+     * @return An array list containing City objects.
      */
     public ArrayList<City> GetAllCitiesInContinentPopDesc(String continent) {
         try {
@@ -615,6 +615,48 @@ public class App {
         catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get city details");
+            return null;
+        }
+
+    }
+
+
+    /**
+     * Gets the total population of every continent as well as the population
+     * in and out of cities with percentages for each.
+     * @return An array list containing Population objects 1 for each continent.
+     */
+    public ArrayList<Population> GetPopulationReportOfAllContinentsTotalPopDesc() {
+        try {
+            // String for SQL statement
+            String selectString =
+                    "SELECT co.Continent AS Continent, " +
+                    "    SUM(co.Population) AS TotalPopulation, " +
+                    "    SUM(cip.CityPopulation) AS CityPopulation, " +
+                    "    SUM(co.Population) - SUM(cip.CityPopulation) AS NonCityPopulation, " +
+                    "    SUM(cip.CityPopulation) / SUM(co.Population) * 100 AS PercentOfPopulationInCities, " +
+                    "    (SUM(co.Population) - SUM(cip.CityPopulation)) / SUM(co.Population) * 100 AS PercentOfPopulationNotInCities " +
+                    "FROM country co " +
+                    "LEFT JOIN (" +
+                    "    SELECT CountryCode, SUM(Population) AS CityPopulation " +
+                    "    FROM city " +
+                    "    GROUP BY CountryCode) cip " +
+                    "    ON co.Code = cip.CountryCode " +
+                    "GROUP BY co.Continent " +
+                    "ORDER BY TotalPopulation DESC;";
+
+
+            // Execute SQL statement
+            ResultSet resultSet = runQuery(selectString);
+
+            // Takes all the data from the result and formats it into an ArrayList of Population.
+            return getPopulationDataFromResultSet(resultSet);
+
+        }
+        // If any error happens.
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get Population data");
             return null;
         }
 
