@@ -377,7 +377,6 @@ public class App {
     }
 
 
-
     /**
      * Gets all the capital cities ordered from the highest population to smallest.
      *
@@ -704,5 +703,83 @@ public class App {
 
     }
 
+
+
+    /**
+     * Turns an ArrayList of capital city reports into a single string with 1 report on each line.
+     * @param capitalCities An ArrayList of capital city reports.
+     * @return A string that formats each capital city report as 1 line.
+     */
+    public String FormatCapitalCityReportsAsString(ArrayList<City> capitalCities)
+    {
+        if (capitalCities != null)
+        {
+            StringBuilder finishedString = new StringBuilder();
+            for (City capitalCityReport : capitalCities)
+            {
+                finishedString.append(capitalCityReport.name).append(", ");
+                finishedString.append(capitalCityReport.country).append(", ");
+                finishedString.append(capitalCityReport.population).append("\n");
+            }
+
+            return finishedString.toString();
+        }
+
+        return null;
+    }
+
+
+    /**
+     * Turns an ArrayList of country reports into a single string with 1 report on each line.
+     * @param countries An ArrayList of country reports.
+     * @return A string that formats each country report as 1 line.
+     */
+    public String FormatCountryReportsAsString(ArrayList<Country> countries)
+    {
+        if (countries != null)
+        {
+            StringBuilder finishedString = new StringBuilder();
+            for (Country country : countries)
+            {
+                finishedString.append(country.CountryCode).append(", ");
+                finishedString.append(country.CountryName).append(", ");
+                finishedString.append(country.Continent).append(", ");
+                finishedString.append(country.Region).append(", ");
+                finishedString.append(country.Population).append(", ");
+                finishedString.append(country.CapitalCity).append("\n");
+            }
+
+            return finishedString.toString();
+        }
+
+        return null;
+    }
+
+
+    /**
+     * Turns an ArrayList of Population reports into a single string with 1 report on each line.
+     * @param populationReports An ArrayList of population reports.
+     * @return A string that formats each population report as 1 line.
+     */
+    public String FormatPopulationReportsAsString(ArrayList<Population> populationReports)
+    {
+        if (populationReports != null)
+        {
+            StringBuilder finishedString = new StringBuilder();
+            for (Population populationReport : populationReports)
+            {
+                finishedString.append(populationReport.AreaName).append(", ");
+                finishedString.append(populationReport.PopulationOfArea).append(", ");
+                finishedString.append(populationReport.PopulationOfAreaInCities).append(", ");
+                finishedString.append(populationReport.PopulationOfAreaInCitiesPercent).append(", ");
+                finishedString.append(populationReport.PopulationOfAreaNotInCities).append(", ");
+                finishedString.append(populationReport.PopulationOfAreaNotInCitiesPercent).append("\n");
+            }
+
+            return finishedString.toString();
+        }
+
+        return null;
+    }
 
 }
