@@ -586,6 +586,31 @@ public class App {
         }
     }
 
+    public ArrayList<City> GetAllCitiesInCountryOrderedByPopulation(String countryName) {
+        try {
+            // String for SQL statement
+            String selectString =
+                    "SELECT city.Name AS Name, city.Population AS Population, country.Name AS CountryName " +
+                            "FROM city " +
+                            "INNER JOIN country ON city.CountryCode = country.Code " +
+                            "WHERE country.Name = '" + countryName + "' " +  // Replace with the desired country name
+                            "ORDER BY city.Population DESC;";
+
+
+            // Execute SQL statement
+            ResultSet resultSet = runQuery(selectString);
+
+            // Takes all the data from the result and formats it into an ArrayList of cities.
+            return getCityDataFromResultSet(resultSet);
+
+        }
+        // If any error happens.
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
 
     /**
      * Gets all the cities in a given continent ordered from the highest population to smallest.
