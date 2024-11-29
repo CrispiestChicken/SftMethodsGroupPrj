@@ -202,5 +202,18 @@ public class AppIntegrationTest {
         assertEquals(populationReports.get(0).PopulationOfAreaNotInCitiesPercent, 78.9378);
     }
 
+    @Test
+    void testFormatCapitalCityReportsAsString()
+    {
+        // Testing it shows Null as there is no data.
+        ArrayList<City> capitalCities = new ArrayList<>();
+        assertNull(app.FormatCapitalCityReportsAsString(capitalCities));
+
+        // Making sure that the data is correct
+        capitalCities = app.GetAllCapitalCitiesPopDesc();
+        String capitalCityReportString = app.FormatCapitalCityReportsAsString(capitalCities);
+        assertTrue(capitalCityReportString.contains("London, GBR, 7285000"));
+    }
+
 
 }
