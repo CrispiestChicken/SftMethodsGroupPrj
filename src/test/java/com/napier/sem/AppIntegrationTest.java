@@ -240,9 +240,6 @@ public class AppIntegrationTest {
          */
     }
 
-
-
-
     /**
      * Tests if the data collected from the database is what it's meant to be
      * for the languages given in descending order.
@@ -279,5 +276,23 @@ public class AppIntegrationTest {
         ArrayList<Country> test = app.getGivenPopulationOFCountry("United States");
         assertEquals(test.get(0).CountryName,"United States");
         assertEquals(test.get(0).Population,278357000);
+    }
+
+    /**
+     * Tests if the method is giving the correct data in the correct format and only the amount asked for.
+     */
+    @Test
+    void testGetGivenNumberOfCapitalCitiesInGivenContinentPopDesc()
+    {
+        // Getting the data and checking if it is correct.
+        ArrayList<City> capitalCities = app.GetGivenNumberOfCapitalCitiesInGivenContinentPopDesc("Europe", 5);
+        assertEquals(capitalCities.get(0).name, "Moscow");
+        assertEquals(capitalCities.get(0).population, 8389200);
+
+        assertEquals(capitalCities.get(4).name, "Roma");
+        assertEquals(capitalCities.get(4).population, 2643581);
+
+        // Making sure it only gets 5 rows.
+        assertNull(capitalCities.get(5));
     }
 }
