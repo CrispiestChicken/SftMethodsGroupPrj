@@ -105,6 +105,34 @@ public class App {
     }
 
     /**
+     *
+     * @param results A ResultSet that you get from executing a query.
+     * @return An ArrayList containing City objects that contains the data for each city gotten from the result set.
+     * @throws Exception Makes it so the person using this method has to deal with exceptions.
+     */
+    private ArrayList<City> getAllCitiesInCountryOrderedByPopulationDataFromResultSet(ResultSet results) throws Exception
+    {
+
+        ArrayList<City> cities = new ArrayList<>();
+
+        // Declaring city up here so that it isn't declaring it over and over again.
+        City city;
+
+
+        // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
+        while (results.next()) {
+            city = new City();
+            city.population = results.getInt("Population");
+            city.name = results.getString("Name");
+            city.country = results.getString("CountryName");
+
+            cities.add(city);
+        }
+
+        return cities;
+    }
+
+    /**
      * @param results A ResultSet that you get from executing a query.
      * @return An ArrayList containing City objects that contains the data for each capital city gotten from the result set.
      * @throws Exception Makes it so the person using this method has to deal with exceptions.
@@ -307,6 +335,20 @@ public class App {
             System.out.printf("%-30s %-30s %-30s %-30s %n", "Name", "Country", "District", "Population ");
             for(City city : cities) {
                 System.out.printf("%-30s %-30s %-30s %-30s %n", city.name, city.country, city.district, city.population);
+            }
+
+        }
+    }
+
+    /**
+     * This displays Top N Populated Countries in a Region
+     *
+     */
+    public void displayTopPopulatedCountries(ArrayList<Country> contries) {
+        if (contries != null) {
+            System.out.printf("%-30s %-30s %-30s %n", "Name", "District", "Population ");
+            for(Country country : contries) {
+                System.out.printf("%-30s %-30s %-30s %n", country.CountryName, country.Region, country.Population);
             }
 
         }
@@ -554,6 +596,90 @@ public class App {
 
     }
 
+    /**
+     * Gets given number of capital cities in a given region ordered from the highest population to smallest.
+     * @param region The region you want to get the capital cities from.
+     * @param numOfTopPopulatedCountries The number of countries to get.
+     * @return An array list containing City objects.
+     */
+    public ArrayList<Country> getGivenNumOfTopPopulatedCountriesInRegionPopDesc(String region, int numOfTopPopulatedCountries) {
+        try {
+            // String for SQL statement
+            String selectString =
+                    "SELECT * "
+                            + "FROM country "
+                            + "WHERE Region Like '" + region + "' ORDER BY Population DESC "
+                            + "LIMIT " + numOfTopPopulatedCountries;
+
+            // Execute SQL statement
+            ResultSet resultSet = runQuery(selectString);
+
+            // Takes all the data from the result and formats it into an ArrayList of cities.
+            return getCountryDataFromResultSet(resultSet);
+
+        }
+        // If any error happens.
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+
+    }
+
+    /**
+     * Gets given number of capital cities in a given region ordered from the highest population to smallest.
+     * @param numOfTopPopulatedCountries The number of countries to get.
+     * @return An array list containing City objects.
+     */
+    public ArrayList<Country> getGivenNumOfTopPopulatedCountriesInTheWorld(int numOfTopPopulatedCountries) {
+        try {
+            // String for SQL statement
+            String selectString =
+                    "SELECT * "
+                            + "FROM country "
+                            + " ORDER BY Population DESC "
+                            + "LIMIT " + numOfTopPopulatedCountries;
+
+            // Execute SQL statement
+            ResultSet resultSet = runQuery(selectString);
+
+            // Takes all the data from the result and formats it into an ArrayList of cities.
+            return getCountryDataFromResultSet(resultSet);
+
+        }
+        // If any error happens.
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+
+    }
+
+    public ArrayList<Country> getGivenPopulationOFCountry(String country) {
+        try {
+            // String for SQL statement
+            String selectString =
+                    "SELECT * "
+                            + "FROM country "
+                            + " Where Name Like '" + country + "' ";
+
+            // Execute SQL statement
+            ResultSet resultSet = runQuery(selectString);
+
+            // Takes all the data from the result and formats it into an ArrayList of cities.
+            return getCountryDataFromResultSet(resultSet);
+
+        }
+        // If any error happens.
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+
+    }
 
     /**
      * Gets all the capital cities in a given continent ordered from the highest population to smallest.
@@ -586,6 +712,31 @@ public class App {
         }
     }
 
+    public ArrayList<City> getAllCitiesInCountryOrderedByPopulation(String countryName) {
+        try {
+            // String for SQL statement
+            String selectString =
+                    "SELECT city.Name AS Name, city.Population AS Population, country.Name AS CountryName " +
+                            "FROM city " +
+                            "INNER JOIN country ON city.CountryCode = country.Code " +
+                            "WHERE country.Name = '" + countryName + "' " +  // Replace with the desired country name
+                            "ORDER BY city.Population DESC;";
+
+
+            // Execute SQL statement
+            ResultSet resultSet = runQuery(selectString);
+
+            // Takes all the data from the result and formats it into an ArrayList of cities.
+            return getAllCitiesInCountryOrderedByPopulationDataFromResultSet(resultSet);
+
+        }
+        // If any error happens.
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
 
     /**
      * Gets all the cities in a given continent ordered from the highest population to smallest.

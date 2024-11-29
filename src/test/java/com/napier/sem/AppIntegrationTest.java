@@ -243,4 +243,41 @@ public class AppIntegrationTest {
 
 
 
+    /**
+     * Tests if the data collected from the database is what it's meant to be
+     * for the languages given in descending order.
+     */
+    @Test
+    void testCittiesInACountryOrederBypopulation()
+    {
+        ArrayList<City> test = app.getAllCitiesInCountryOrderedByPopulation("China");
+        assertEquals(test.get(0).name,"Shanghai");
+        assertEquals(test.get(0).population,9696300);
+        assertEquals(test.get(0).country,"China");
+    }
+
+    @Test
+    void testGetGivenNumOfTopPopulatedCountriesInRegionPopDesc()
+    {
+        ArrayList<Country> test = app.getGivenNumOfTopPopulatedCountriesInRegionPopDesc("Caribbean", 5);
+        assertEquals(test.get(0).CountryName,"Cuba");
+        assertEquals(test.get(0).Population,11201000);
+        assertEquals(test.get(0).Region,"Caribbean");
+    }
+
+    @Test
+    void testGetGivenNumOfTopPopulatedCountriesInTheWorld()
+    {
+        ArrayList<Country> test = app.getGivenNumOfTopPopulatedCountriesInTheWorld(10);
+        assertEquals(test.get(0).CountryName,"China");
+        assertEquals(test.get(0).Population,1277558000);
+    }
+
+    @Test
+    void testgetGivenPopulationOFCountry()
+    {
+        ArrayList<Country> test = app.getGivenPopulationOFCountry("United States");
+        assertEquals(test.get(0).CountryName,"United States");
+        assertEquals(test.get(0).Population,278357000);
+    }
 }
