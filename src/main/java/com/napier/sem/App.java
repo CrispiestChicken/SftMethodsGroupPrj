@@ -746,7 +746,7 @@ public class App {
                 finishedString.append(country.Continent).append(", ");
                 finishedString.append(country.Region).append(", ");
                 finishedString.append(country.Population).append(", ");
-                finishedString.append(country.CapitalCity).append(", ");
+                finishedString.append(country.CapitalCity).append("\n");
             }
 
             return finishedString.toString();
@@ -773,7 +773,7 @@ public class App {
                 finishedString.append(populationReport.PopulationOfAreaInCities).append(", ");
                 finishedString.append(populationReport.PopulationOfAreaInCitiesPercent).append(", ");
                 finishedString.append(populationReport.PopulationOfAreaNotInCities).append(", ");
-                finishedString.append(populationReport.PopulationOfAreaNotInCitiesPercent).append(", ");
+                finishedString.append(populationReport.PopulationOfAreaNotInCitiesPercent).append("\n");
             }
 
             return finishedString.toString();
