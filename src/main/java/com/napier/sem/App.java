@@ -657,6 +657,30 @@ public class App {
 
     }
 
+    public ArrayList<Country> getGivenPopulationOFCountry(String country) {
+        try {
+            // String for SQL statement
+            String selectString =
+                    "SELECT * "
+                            + "FROM country "
+                            + " Where Name Like '" + country + "' ";
+
+            // Execute SQL statement
+            ResultSet resultSet = runQuery(selectString);
+
+            // Takes all the data from the result and formats it into an ArrayList of cities.
+            return getCountryDataFromResultSet(resultSet);
+
+        }
+        // If any error happens.
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+
+    }
+
     /**
      * Gets all the capital cities in a given continent ordered from the highest population to smallest.
      * @param continent The continent you want to get the capital cities from.

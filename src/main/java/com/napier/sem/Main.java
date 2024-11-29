@@ -191,6 +191,9 @@ public class Main {
 
         a.displayTopPopulatedCountries(topPopulatedCountry);
 
+        ArrayList<Country> country = a.getGivenPopulationOFCountry("United States");
+
+        a.displayTopPopulatedCountries(country);
         /*ArrayList<City> city = a.getCity();
 
         a.displayCity(city);*/
