@@ -124,4 +124,16 @@ public class AppIntegrationTest {
         assertEquals(topcapcities.get(0).population,9981619);
     }
 
+    /**
+     * Tests if the data collected from the database is what it's meant to be
+     * for the languages given in descending order.
+     */
+    @Test
+    void testCittiesInACountryOrederBypopulation()
+    {
+        ArrayList<City> test = app.getAllCitiesInCountryOrderedByPopulation("China");
+        assertEquals(test.get(0).name,"Shanghai");
+        assertEquals(test.get(0).population,9696300);
+        assertEquals(test.get(0).country,"China");
+    }
 }
