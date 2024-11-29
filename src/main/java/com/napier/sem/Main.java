@@ -185,7 +185,11 @@ public class Main {
 
         ArrayList<Country> topPopulAtedCountriesInARegion = a.getGivenNumOfTopPopulatedCountriesInRegionPopDesc("Caribbean", 5);
 
-        a.displayTopPopulatedCountriesInARegionCity(topPopulAtedCountriesInARegion);
+        a.displayTopPopulatedCountries(topPopulAtedCountriesInARegion);
+
+        ArrayList<Country> topPopulatedCountry = a.getGivenNumOfTopPopulatedCountriesInTheWorld(10);
+
+        a.displayTopPopulatedCountries(topPopulatedCountry);
 
         /*ArrayList<City> city = a.getCity();
 

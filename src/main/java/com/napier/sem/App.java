@@ -344,7 +344,7 @@ public class App {
      * This displays Top N Populated Countries in a Region
      *
      */
-    public void displayTopPopulatedCountriesInARegionCity(ArrayList<Country> contries) {
+    public void displayTopPopulatedCountries(ArrayList<Country> contries) {
         if (contries != null) {
             System.out.printf("%-30s %-30s %-30s %n", "Name", "District", "Population ");
             for(Country country : contries) {
@@ -627,6 +627,35 @@ public class App {
 
     }
 
+    /**
+     * Gets given number of capital cities in a given region ordered from the highest population to smallest.
+     * @param numOfTopPopulatedCountries The number of countries to get.
+     * @return An array list containing City objects.
+     */
+    public ArrayList<Country> getGivenNumOfTopPopulatedCountriesInTheWorld(int numOfTopPopulatedCountries) {
+        try {
+            // String for SQL statement
+            String selectString =
+                    "SELECT * "
+                            + "FROM country "
+                            + " ORDER BY Population DESC "
+                            + "LIMIT " + numOfTopPopulatedCountries;
+
+            // Execute SQL statement
+            ResultSet resultSet = runQuery(selectString);
+
+            // Takes all the data from the result and formats it into an ArrayList of cities.
+            return getCountryDataFromResultSet(resultSet);
+
+        }
+        // If any error happens.
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+
+    }
 
     /**
      * Gets all the capital cities in a given continent ordered from the highest population to smallest.
