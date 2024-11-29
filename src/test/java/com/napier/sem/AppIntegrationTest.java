@@ -202,6 +202,10 @@ public class AppIntegrationTest {
         assertEquals(populationReports.get(0).PopulationOfAreaNotInCitiesPercent, 78.9378);
     }
 
+    /**
+     * Tests that the method will give the data in the correct format
+     * as well as it giving null when given an empty arraylist.
+     */
     @Test
     void testFormatCapitalCityReportsAsString()
     {
