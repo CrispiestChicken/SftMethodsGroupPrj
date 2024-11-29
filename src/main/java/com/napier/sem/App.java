@@ -105,6 +105,34 @@ public class App {
     }
 
     /**
+     *
+     * @param results A ResultSet that you get from executing a query.
+     * @return An ArrayList containing City objects that contains the data for each city gotten from the result set.
+     * @throws Exception Makes it so the person using this method has to deal with exceptions.
+     */
+    private ArrayList<City> getAllCitiesInCountryOrderedByPopulationDataFromResultSet(ResultSet results) throws Exception
+    {
+
+        ArrayList<City> cities = new ArrayList<>();
+
+        // Declaring city up here so that it isn't declaring it over and over again.
+        City city;
+
+
+        // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
+        while (results.next()) {
+            city = new City();
+            city.population = results.getInt("Population");
+            city.name = results.getString("Name");
+            city.country = results.getString("CountryName");
+
+            cities.add(city);
+        }
+
+        return cities;
+    }
+
+    /**
      * @param results A ResultSet that you get from executing a query.
      * @return An ArrayList containing City objects that contains the data for each capital city gotten from the result set.
      * @throws Exception Makes it so the person using this method has to deal with exceptions.
@@ -586,7 +614,7 @@ public class App {
         }
     }
 
-    public ArrayList<City> GetAllCitiesInCountryOrderedByPopulation(String countryName) {
+    public ArrayList<City> getAllCitiesInCountryOrderedByPopulation(String countryName) {
         try {
             // String for SQL statement
             String selectString =
@@ -601,7 +629,7 @@ public class App {
             ResultSet resultSet = runQuery(selectString);
 
             // Takes all the data from the result and formats it into an ArrayList of cities.
-            return getCityDataFromResultSet(resultSet);
+            return getAllCitiesInCountryOrderedByPopulationDataFromResultSet(resultSet);
 
         }
         // If any error happens.
