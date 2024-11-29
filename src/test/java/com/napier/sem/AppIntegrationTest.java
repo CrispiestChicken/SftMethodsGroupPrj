@@ -153,4 +153,12 @@ public class AppIntegrationTest {
         assertEquals(test.get(0).CountryName,"China");
         assertEquals(test.get(0).Population,1277558000);
     }
+
+    @Test
+    void testgetGivenPopulationOFCountry()
+    {
+        ArrayList<Country> test = app.getGivenPopulationOFCountry("United States");
+        assertEquals(test.get(0).CountryName,"United States");
+        assertEquals(test.get(0).Population,278357000);
+    }
 }
