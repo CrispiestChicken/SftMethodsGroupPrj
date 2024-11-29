@@ -152,5 +152,17 @@ public class AppIntegrationTest {
         assertNull(capitalCities.get(5));
     }
 
+    /**
+     * Tests if the method is giving the correct data in the correct format.
+     */
+    @Test
+    void testGetAllCapitalCitiesInContinentPopDesc()
+    {
+        // Getting the data then checking if it is correct.
+        ArrayList<City> capitalCities = app.GetAllCapitalCitiesInContinentPopDesc("Europe");
+        assertEquals(capitalCities.get(0).name, "Moscow");
+        assertEquals(capitalCities.get(0).population, 8389200);
+    }
+
 
 }
