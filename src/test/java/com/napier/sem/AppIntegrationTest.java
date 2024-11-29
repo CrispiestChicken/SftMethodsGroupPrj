@@ -189,5 +189,18 @@ public class AppIntegrationTest {
         assertEquals(populationReports.get(0).PopulationOfAreaNotInCitiesPercent, 81.1714);
     }
 
+    /**
+     * Tests if the method is giving the correct data in the correct format.
+     */
+    @Test
+    void testGetPopulationReportOfAllRegionsTotalPopDesc()
+    {
+        // Getting the data then checking if it is correct.
+        ArrayList<Population> populationReports = app.GetPopulationReportOfAllContinentsTotalPopDesc();
+        assertEquals(populationReports.get(0).AreaName, "Eastern Asia");
+        assertEquals(populationReports.get(0).PopulationOfAreaInCitiesPercent, 21.0622);
+        assertEquals(populationReports.get(0).PopulationOfAreaNotInCitiesPercent, 78.9378);
+    }
+
 
 }
