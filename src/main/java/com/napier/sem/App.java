@@ -755,4 +755,31 @@ public class App {
         return null;
     }
 
+
+    /**
+     * Turns an ArrayList of Population reports into a single string with 1 report on each line.
+     * @param populationReports An ArrayList of population reports.
+     * @return A string that formats each population report as 1 line.
+     */
+    public String FormatPopulationReportsAsString(ArrayList<Population> populationReports)
+    {
+        if (populationReports != null)
+        {
+            StringBuilder finishedString = new StringBuilder();
+            for (Population populationReport : populationReports)
+            {
+                finishedString.append(populationReport.AreaName).append(", ");
+                finishedString.append(populationReport.PopulationOfArea).append(", ");
+                finishedString.append(populationReport.PopulationOfAreaInCities).append(", ");
+                finishedString.append(populationReport.PopulationOfAreaInCitiesPercent).append(", ");
+                finishedString.append(populationReport.PopulationOfAreaNotInCities).append(", ");
+                finishedString.append(populationReport.PopulationOfAreaNotInCitiesPercent).append(", ");
+            }
+
+            return finishedString.toString();
+        }
+
+        return null;
+    }
+
 }
