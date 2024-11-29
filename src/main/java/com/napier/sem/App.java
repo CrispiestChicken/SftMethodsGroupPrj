@@ -729,4 +729,30 @@ public class App {
     }
 
 
+    /**
+     * Turns an ArrayList of country reports into a single string with 1 report on each line.
+     * @param countries An ArrayList of country reports.
+     * @return A string that formats each country report as 1 line.
+     */
+    public String FormatCountryReportsAsString(ArrayList<Country> countries)
+    {
+        if (countries != null)
+        {
+            StringBuilder finishedString = new StringBuilder();
+            for (Country country : countries)
+            {
+                finishedString.append(country.CountryCode).append(", ");
+                finishedString.append(country.CountryName).append(", ");
+                finishedString.append(country.Continent).append(", ");
+                finishedString.append(country.Region).append(", ");
+                finishedString.append(country.Population).append(", ");
+                finishedString.append(country.CapitalCity).append(", ");
+            }
+
+            return finishedString.toString();
+        }
+
+        return null;
+    }
+
 }
