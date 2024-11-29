@@ -194,6 +194,12 @@ public class Main {
         ArrayList<Country> country = a.getGivenPopulationOFCountry("United States");
 
         a.displayTopPopulatedCountries(country);
+
+        ArrayList<City> capCities = a.getAllCapitalCities();
+
+        a.displayCapitalCity(capCities);
+
+        System.out.println("POPULATION OF CONTINET: "+ a.getPopulationOfAContinent("Asia"));
         /*ArrayList<City> city = a.getCity();
 
         a.displayCity(city);*/
