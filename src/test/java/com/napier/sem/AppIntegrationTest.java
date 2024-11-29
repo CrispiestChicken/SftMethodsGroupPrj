@@ -5,12 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AppIntegrationTest {
     static App app;
-    static City city;
     @BeforeAll
     static void init() {
         app = new App();
@@ -123,5 +121,36 @@ public class AppIntegrationTest {
         assertEquals(topcapcities.get(0).name,"Seoul");
         assertEquals(topcapcities.get(0).population,9981619);
     }
+
+    /**
+     * Tests if the method is giving the correct data in the correct format.
+     */
+    @Test
+    void testGetAllCapitalCitiesInRegionPopDesc()
+    {
+        // Getting the data then checking if it is correct.
+        ArrayList<City> capitalCities = app.GetAllCapitalCitiesInRegionPopDesc("Middle East");
+        assertEquals(capitalCities.get(0).name, "Baghdad");
+        assertEquals(capitalCities.get(0).population, 4336000);
+    }
+
+    /**
+     * Tests if the method is giving the correct data in the correct format and only the amount asked for.
+     */
+    @Test
+    void testGetGivenNumberOfCapitalCitiesInRegionPopDesc()
+    {
+        // Getting the data and checking if it is correct.
+        ArrayList<City> capitalCities = app.GetGivenNumOfCapitalCitiesInRegionPopDesc("Middle East", 5);
+        assertEquals(capitalCities.get(0).name, "Baghdad");
+        assertEquals(capitalCities.get(0).population, 4336000);
+
+        assertEquals(capitalCities.get(4).name, "Damascus");
+        assertEquals(capitalCities.get(4).population, 1347000);
+
+        // Making sure it only gets 5 rows.
+        assertNull(capitalCities.get(5));
+    }
+
 
 }
