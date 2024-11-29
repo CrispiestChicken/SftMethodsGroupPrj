@@ -240,6 +240,24 @@ public class AppIntegrationTest {
          */
     }
 
+    /**
+     * Tests that the method will give the data in the correct format
+     * as well as it giving null when given an empty arraylist.
+     */
+    @Test
+    void testFormatPopulationReportsAsString()
+    {
+        // Testing it shows Null as there is no data.
+        ArrayList<Population> populationReports = new ArrayList<>();
+        assertNull(app.FormatPopulationReportsAsString(populationReports));
+
+        // Making sure that the data is correct
+        populationReports = app.GetPopulationReportOfAllContinentsTotalPopDesc();
+        String populationReportsString = app.FormatPopulationReportsAsString(populationReports);
+        assertTrue(populationReportsString.contains("Africa, 784475000, 135838579, 17.3159, 648636421, 82.6841"));
+
+    }
+
 
 
 
