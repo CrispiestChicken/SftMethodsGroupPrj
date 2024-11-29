@@ -161,4 +161,12 @@ public class AppIntegrationTest {
         assertEquals(test.get(0).CountryName,"United States");
         assertEquals(test.get(0).Population,278357000);
     }
+
+    @Test
+    void testGetAllCapitalCities()
+    {
+        ArrayList<City> test = app.getAllCapitalCities();
+        assertEquals(test.get(0).name,"Seoul");
+        assertEquals(test.get(0).population,9981619);
+    }
 }

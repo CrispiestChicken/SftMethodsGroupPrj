@@ -104,6 +104,8 @@ public class App {
         return cities;
     }
 
+
+
     /**
      *
      * @param results A ResultSet that you get from executing a query.
@@ -340,6 +342,16 @@ public class App {
         }
     }
 
+    public void displayCapitalCity(ArrayList<City> cities) {
+        if (cities != null) {
+            System.out.printf("%-30s %-30s %-30s %-30s %n", "Capital", "Country", "District", "Population ");
+            for(City city : cities) {
+                System.out.printf("%-30s %-30s %-30s %-30s %n", city.name, city.country, city.district, city.population);
+            }
+
+        }
+    }
+
     /**
      * This displays Top N Populated Countries in a Region
      *
@@ -354,39 +366,48 @@ public class App {
         }
     }
 
-
-    /**
-     * This gets the capital city
-     *
-     */
-    /*public Capital_City getCapCity(int cityId) {
+    public ArrayList<City> getAllCapitalCities()
+    {
         try {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    "SELECT Name, CountryCode, Population "         // this is not complete will need to get capital city code from each country
-                            + "FROM city "
-                            + "WHERE ID = " + cityId;
+            ArrayList<City> capCitties = new ArrayList<City>();
+            String selectString =
+                    "SELECT city.Name AS Capital, "
+                            + "country.Name AS Country, "
+                            + "city.District, "
+                            + "city.Population "
+                            + "FROM country "
+                            + "INNER JOIN city "
+                            + "ON country.Capital = city.ID "
+                            + "ORDER BY city.Population DESC;";
+
+
             // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Return new employee if valid.
-            // Check one is returned
-            if (rset.next()) {
-                Capital_City Ccity = new Capital_City();
-                Ccity.population = rset.getInt("Population");
-                Ccity.countryCode = rset.getString("CountryCode");
-                Ccity.name = rset.getString("Name");
-                return Ccity;
-            } else
-                return null;
-        } catch (Exception f) {
-            System.out.println(f.getMessage());
-            System.out.println("Failed to get capital city details");
+            ResultSet resultSet = runQuery(selectString);
+
+            // Takes all the data from the result and formats it into an ArrayList of cities.
+            City city;
+
+            // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
+            while (resultSet.next()) {
+                city = new City();
+                city.population = resultSet.getInt("city.Population");
+                city.country = resultSet.getString("city.District");
+                city.district = resultSet.getString("District");
+                city.name = resultSet.getString("Capital");
+
+                capCitties.add(city);
+
+            }
+            return capCitties;
+
+        }
+        // If any error happens.
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
             return null;
         }
-    }*/
-
+    }
 
     /**
      * Gets all the cities ordered from the highest population to smallest.
