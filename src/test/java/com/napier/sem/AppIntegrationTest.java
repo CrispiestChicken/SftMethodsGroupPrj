@@ -219,5 +219,28 @@ public class AppIntegrationTest {
         assertTrue(capitalCityReportString.contains("London, GBR, 7285000"));
     }
 
+    /**
+     * Tests that the method will give the data in the correct format
+     * as well as it giving null when given an empty arraylist.
+     */
+    @Test
+    void testFormatCountryReportsAsString()
+    {
+        // Testing it shows Null as there is no data.
+        ArrayList<Country> countryReports = new ArrayList<>();
+        assertNull(app.FormatCountryReportsAsString(countryReports));
+
+        //There is no country reports just yet.
+
+        /*
+        // Making sure that the data is correct
+        countryReports = Get
+        String countryReportsString = "";
+        assertTrue(countryReportsString.contains(""));
+         */
+    }
+
+
+
 
 }
