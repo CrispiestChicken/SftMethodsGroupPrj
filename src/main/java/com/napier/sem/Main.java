@@ -183,6 +183,14 @@ public class Main {
 
         a.displayCity(cittiesInACountryOrederBypopulation);
 
+        ArrayList<Country> topPopulAtedCountriesInARegion = a.getGivenNumOfTopPopulatedCountriesInRegionPopDesc("Caribbean", 5);
+
+        a.displayTopPopulatedCountriesInARegionCity(topPopulAtedCountriesInARegion);
+
+        int GlobalPop = a.GetGlobalPop();
+        a.displayGlobalPop(GlobalPop);
+
+
         /*ArrayList<City> city = a.getCity();
 
         a.displayCity(city);*/

@@ -1,5 +1,6 @@
 package com.napier.sem;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -340,6 +341,20 @@ public class App {
         }
     }
 
+    /**
+     * This displays Top N Populated Countries in a Region
+     *
+     */
+    public void displayTopPopulatedCountriesInARegionCity(ArrayList<Country> contries) {
+        if (contries != null) {
+            System.out.printf("%-30s %-30s %-30s %n", "Name", "District", "Population ");
+            for(Country country : contries) {
+                System.out.printf("%-30s %-30s %-30s %n", country.CountryName, country.Region, country.Population);
+            }
+
+        }
+    }
+
 
     /**
      * This gets the capital city
@@ -502,6 +517,31 @@ public class App {
         }
     }
 
+    public int GetGlobalPop()
+    {
+        try{
+            String selectString =
+                    "SELECT SUM(Population) AS GlobalPop,"
+                        + "FROM country";
+            ResultSet resultSet = runQuery(selectString);
+            int GlobalPop = resultSet.getInt("GlobalPop");
+            return(GlobalPop);
+        }
+        //if any error happens.
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get global pop");
+            return -1;
+        }
+    }
+
+    public void displayGlobalPop(int GlobalPop){
+        if (GlobalPop != -1){
+            System.out.printf("%-30 %n", "Global population");
+            System.out.printf("%-30s %n", GlobalPop);
+        }
+    }
+
     /**
      *This displays the language report
      */
@@ -571,6 +611,37 @@ public class App {
 
             // Takes all the data from the result and formats it into an ArrayList of cities.
             return getCapitalCityDataFromResultSet(resultSet);
+
+        }
+        // If any error happens.
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+
+    }
+
+    /**
+     * Gets given number of capital cities in a given region ordered from the highest population to smallest.
+     * @param region The region you want to get the capital cities from.
+     * @param numOfTopPopulatedCountries The number of countries to get.
+     * @return An array list containing City objects.
+     */
+    public ArrayList<Country> getGivenNumOfTopPopulatedCountriesInRegionPopDesc(String region, int numOfTopPopulatedCountries) {
+        try {
+            // String for SQL statement
+            String selectString =
+                    "SELECT * "
+                            + "FROM country "
+                            + "WHERE Region Like '" + region + "' ORDER BY Population DESC "
+                            + "LIMIT " + numOfTopPopulatedCountries;
+
+            // Execute SQL statement
+            ResultSet resultSet = runQuery(selectString);
+
+            // Takes all the data from the result and formats it into an ArrayList of cities.
+            return getCountryDataFromResultSet(resultSet);
 
         }
         // If any error happens.

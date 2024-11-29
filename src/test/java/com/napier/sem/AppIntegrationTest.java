@@ -136,4 +136,13 @@ public class AppIntegrationTest {
         assertEquals(test.get(0).population,9696300);
         assertEquals(test.get(0).country,"China");
     }
+
+    @Test
+    void testGetGivenNumOfTopPopulatedCountriesInRegionPopDesc()
+    {
+        ArrayList<Country> test = app.getGivenNumOfTopPopulatedCountriesInRegionPopDesc("Caribbean", 5);
+        assertEquals(test.get(0).CountryName,"Cuba");
+        assertEquals(test.get(0).Population,11201000);
+        assertEquals(test.get(0).Region,"Caribbean");
+    }
 }
