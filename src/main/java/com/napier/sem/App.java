@@ -439,6 +439,40 @@ public class App {
         }
     }
 
+    /**
+     * Gets all the cities ordered from the highest population to smallest.
+     *
+     * @return continent population
+     */
+    public long getPopulationOfAContinent(String continent)
+    {
+        long population = 0;
+        try {
+
+            // String for SQL statement
+            String selectString =
+                    "SELECT Continent, "
+                            + "SUM(Population) AS TotalPopulation "
+                            + "FROM country "
+                            + "WHERE Continent =  '" + continent + "' ;";
+
+
+            // Execute SQL statement
+            ResultSet resultSet = runQuery(selectString);
+
+            // Takes all the data from the result and formats it into an ArrayList of cities.
+            while (resultSet.next()) {
+                population = resultSet.getLong("TotalPopulation");
+            }
+            return population;
+        }
+        // If any error happens.
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return -1;
+        }
+    }
 
     /**
      * Gets all the capital cities ordered from the highest population to smallest.

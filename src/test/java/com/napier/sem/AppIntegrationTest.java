@@ -169,4 +169,11 @@ public class AppIntegrationTest {
         assertEquals(test.get(0).name,"Seoul");
         assertEquals(test.get(0).population,9981619);
     }
+
+    @Test
+    void testgetPopulationOfAContinent()
+    {
+        long test = app.getPopulationOfAContinent("Asia");
+        assertEquals(3705025700L, test);
+    }
 }
