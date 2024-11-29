@@ -376,6 +376,30 @@ public class App {
         }
     }
 
+    /**
+     * Turns an ArrayList of city reports into a single string with 1 report on each line.
+     * @param cities An ArrayList of city reports.
+     * @return A string that formats each city report as 1 line.
+     */
+    public String FormatCityReportsAsString(ArrayList<City> cities)
+    {
+        if (cities != null)
+        {
+            StringBuilder finishedString = new StringBuilder();
+            for (City cityReport : cities)
+            {
+                finishedString.append(cityReport.name).append(", ");
+                finishedString.append(cityReport.country).append(", ");
+                finishedString.append(cityReport.district).append(", ");
+                finishedString.append(cityReport.population).append("\n");
+            }
+
+            return finishedString.toString();
+        }
+
+        return null;
+    }
+
 
 
     /**
