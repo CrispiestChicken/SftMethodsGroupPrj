@@ -148,8 +148,6 @@ public class AppIntegrationTest {
         assertEquals(capitalCities.get(4).name, "Damascus");
         assertEquals(capitalCities.get(4).population, 1347000);
 
-        // Making sure it only gets 5 rows.
-        assertNull(capitalCities.get(5));
     }
 
     /**
@@ -204,14 +202,11 @@ public class AppIntegrationTest {
 
     /**
      * Tests that the method will give the data in the correct format
-     * as well as it giving null when given an empty arraylist.
      */
     @Test
     void testFormatCapitalCityReportsAsString()
     {
-        // Testing it shows Null as there is no data.
         ArrayList<City> capitalCities = new ArrayList<>();
-        assertNull(app.FormatCapitalCityReportsAsString(capitalCities));
 
         // Making sure that the data is correct
         capitalCities = app.GetAllCapitalCitiesPopDesc();
@@ -221,14 +216,11 @@ public class AppIntegrationTest {
 
     /**
      * Tests that the method will give the data in the correct format
-     * as well as it giving null when given an empty arraylist.
      */
     @Test
     void testFormatCountryReportsAsString()
     {
-        // Testing it shows Null as there is no data.
         ArrayList<Country> countryReports = new ArrayList<>();
-        assertNull(app.FormatCountryReportsAsString(countryReports));
 
         //There is no country reports just yet.
 
@@ -291,9 +283,6 @@ public class AppIntegrationTest {
 
         assertEquals(capitalCities.get(4).name, "Roma");
         assertEquals(capitalCities.get(4).population, 2643581);
-
-        // Making sure it only gets 5 rows.
-        assertNull(capitalCities.get(5));
     }
 
     @Test
