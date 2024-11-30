@@ -838,7 +838,6 @@ public class App {
                     "GROUP BY co.Continent " +
                     "ORDER BY AreaPopulation DESC;";
 
-            System.out.println(selectString);
 
             // Execute SQL statement
             ResultSet resultSet = runQuery(selectString);
