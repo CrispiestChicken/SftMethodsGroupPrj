@@ -3,35 +3,31 @@ package com.napier.sem;
 import java.util.ArrayList;
 
 public class Main {
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         // Create new Application
         App a = new App();
 
         a.connect("localhost:33060", 10000);
 
-        /*
+
         if (args.length < 1) {
 
         } else {
             a.connect(args[0], Integer.parseInt(args[1]));
         }
-         */
+
 
         // Add options to the array.
-        /*ArrayList<String> options = new ArrayList<>();
+        ArrayList<String> options = new ArrayList<>();
         options.add("test1");
         options.add("test2");
         options.add("test3");
         options.add("test4");
 
 
-
-
         String menu = "";
         int counter = 1;
-        for(String option : options)
-        {
+        for (String option : options) {
             menu = menu.concat("\n" + counter + ". " + option);
             counter++;
         }
@@ -39,21 +35,21 @@ public class Main {
         System.out.println(menu);
 
 
-
         // Choosing the option (1/36).
         int chosenOption = 1;
 
         // If option invalid tells the user to select a valid option and ending the program.
-        if (chosenOption < 1 || chosenOption > 36)
-        {
+        if (chosenOption < 1 || chosenOption > 36) {
             System.out.println("Please enter a valid number between 1 and 36");
             return;
         }
 
 
-        switch(chosenOption){
+        switch (chosenOption) {
             case 1:
-                System.out.println("test1Result");
+                ArrayList<City> fg = a.GetAllCapitalCitiesInRegionPopDesc("Middle East");
+                System.out.println(fg.get(0).name);
+
                 break;
             case 2:
                 System.out.println("test2Result");
@@ -162,7 +158,6 @@ public class Main {
                 break;
 
 
-        }*/
 
 
 
@@ -170,15 +165,7 @@ public class Main {
 
 
 
-
-
-
-
-
-
-
-
-
+        /*
         ArrayList<City> cittiesInACountryOrederBypopulation = a.getAllCitiesInCountryOrderedByPopulation("China");
 
         a.displayCity(cittiesInACountryOrederBypopulation);
@@ -214,5 +201,6 @@ public class Main {
         a.displayCity(capPopDestRep);
         // Disconnect from database
         a.disconnect();*/
+        }
     }
 }

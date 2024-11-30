@@ -580,7 +580,7 @@ public class App {
                 "SELECT city.Name AS Name, city.CountryCode AS CountryCode, city.Population AS Population " +
                     "FROM country " +
                     "INNER JOIN city ON city.ID = country.Capital " +
-                    "WHERE country.Region = " + region +
+                    "WHERE country.Region = '" + region + "'" +
                     " ORDER BY city.Population Desc;";
 
 
@@ -615,7 +615,7 @@ public class App {
                 "SELECT city.Name AS Name, city.CountryCode AS CountryCode, city.Population AS Population " +
                     "FROM country " +
                     "INNER JOIN city ON city.ID = country.Capital " +
-                    "WHERE country.Region = " + region +
+                    "WHERE country.Region = '" + region + "'" +
                     "ORDER BY Population Desc " +
                     "LIMIT " + numOfCapCities;
 
@@ -735,7 +735,7 @@ public class App {
                 "SELECT city.Name AS Name, city.CountryCode AS CountryCode, city.Population AS Population " +
                     "FROM country " +
                     "INNER JOIN city ON city.ID = country.Capital " +
-                    "WHERE country.Continent = " + continent +
+                    "WHERE country.Continent = '" + continent + "'" +
                     "ORDER BY Population Desc;";
 
 
@@ -793,7 +793,7 @@ public class App {
                 "SELECT city.Name AS Name, city.CountryCode AS CountryCode, city.Population AS Population, city.District AS District" +
                     "FROM country " +
                     "INNER JOIN city ON city.CountryCode = country.Code " +
-                    "WHERE country.Continent = " + continent +
+                    "WHERE country.Continent = '" + continent + "'" +
                     "ORDER BY Population Desc;";
 
 
@@ -982,7 +982,7 @@ public class App {
                 "SELECT city.Name AS Name, city.CountryCode AS CountryCode, city.Population AS Population"
                     + " FROM country "
                     + " INNER JOIN city ON country.Capital = city.ID "
-                    + " WHERE country.Continent = " + continent
+                    + " WHERE country.Continent = '" + continent + "'"
                     + " ORDER BY Population Desc "
                     + "LIMIT " + numOfCitiesToGet;
 
