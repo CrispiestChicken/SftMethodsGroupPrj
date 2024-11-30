@@ -826,7 +826,7 @@ public class App {
                 "SELECT co.Continent AS AreaName, " +
                     "    SUM(co.Population) AS AreaPopulation, " +
                     "    SUM(cip.CityPopulation) AS AreaCityPopulation, " +
-                    "    SUM(co.Population) - SUM(cip.CityPopulation) AS AreaNonInCityPopulation, " +
+                    "    SUM(co.Population) - SUM(cip.CityPopulation) AS AreaNotInCityPopulation, " +
                     "    SUM(cip.CityPopulation) / SUM(co.Population) * 100 AS AreaCityPopulationPercent, " +
                     "    (SUM(co.Population) - SUM(cip.CityPopulation)) / SUM(co.Population) * 100 AS AreaNotInCityPopulationPercent " +
                     "FROM country co " +
@@ -838,6 +838,7 @@ public class App {
                     "GROUP BY co.Continent " +
                     "ORDER BY AreaPopulation DESC;";
 
+            System.out.println(selectString);
 
             // Execute SQL statement
             ResultSet resultSet = runQuery(selectString);
