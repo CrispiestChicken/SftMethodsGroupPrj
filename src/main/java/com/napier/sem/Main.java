@@ -45,8 +45,8 @@ public class Main {
 
         switch (chosenOption) {
             case 1:
-                ArrayList<Population> fg = a.GetPopulationReportOfAllRegionsTotalPopDesc();
-                System.out.println(fg.get(0).AreaName);
+                ArrayList<City> capitalCities = a.GetAllCapitalCitiesPopDesc();
+                String allCapitalCitiesString = a.FormatCapitalCityReportsAsString(capitalCities);
 
                 break;
             case 2:

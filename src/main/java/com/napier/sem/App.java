@@ -470,11 +470,10 @@ public class App {
         try {
             // String for SQL statement
             String selectString =
-                "SELECT city.Name AS Name, city.CountryCode AS CountryCode, city.Population AS Population " +
+                "SELECT city.Name AS Name, country.Code AS CountryCode, city.Population AS Population " +
                     "FROM country " +
                     "INNER JOIN city ON country.Capital = city.ID " +
                     "ORDER BY city.Population DESC";
-
 
             // Execute SQL statement
             ResultSet resultSet = runQuery(selectString);
@@ -910,7 +909,7 @@ public class App {
             StringBuilder finishedString = new StringBuilder();
             for (City capitalCityReport : capitalCities) {
                 finishedString.append(capitalCityReport.name).append(", ");
-                finishedString.append(capitalCityReport.country).append(", ");
+                finishedString.append(capitalCityReport.countryCode).append(", ");
                 finishedString.append(capitalCityReport.population).append("\n");
             }
 

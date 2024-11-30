@@ -206,12 +206,11 @@ public class AppIntegrationTest {
     @Test
     void testFormatCapitalCityReportsAsString()
     {
-        ArrayList<City> capitalCities = new ArrayList<>();
 
         // Making sure that the data is correct
-        capitalCities = app.GetAllCapitalCitiesPopDesc();
+        ArrayList<City> capitalCities = app.GetAllCapitalCitiesPopDesc();
         String capitalCityReportString = app.FormatCapitalCityReportsAsString(capitalCities);
-        assertTrue(capitalCityReportString.contains("London, GBR, 7285000"));
+        assertTrue(capitalCityReportString.contains("Seoul, KOR, 9981619"));
     }
 
     /**
