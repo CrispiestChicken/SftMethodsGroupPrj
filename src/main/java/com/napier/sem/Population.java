@@ -6,10 +6,10 @@ package com.napier.sem;
 public class Population
 {
     public String AreaName;
-    public int PopulationOfArea;
-    public int PopulationOfAreaInCities;
+    public long PopulationOfArea;
+    public long PopulationOfAreaInCities;
     public double PopulationOfAreaInCitiesPercent;
-    public int PopulationOfAreaNotInCities;
+    public long PopulationOfAreaNotInCities;
     public double PopulationOfAreaNotInCitiesPercent;
 
 
