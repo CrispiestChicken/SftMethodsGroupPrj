@@ -5,12 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AppIntegrationTest {
     static App app;
-    static City city;
     @BeforeAll
     static void init() {
         app = new App();
@@ -124,4 +122,192 @@ public class AppIntegrationTest {
         assertEquals(topcapcities.get(0).population,9981619);
     }
 
+    /**
+     * Tests if the method is giving the correct data in the correct format.
+     */
+    @Test
+    void testGetAllCapitalCitiesInRegionPopDesc()
+    {
+        // Getting the data then checking if it is correct.
+        ArrayList<City> capitalCities = app.GetAllCapitalCitiesInRegionPopDesc("Middle East");
+        assertEquals(capitalCities.get(0).name, "Baghdad");
+        assertEquals(capitalCities.get(0).population, 4336000);
+    }
+
+    /**
+     * Tests if the method is giving the correct data in the correct format and only the amount asked for.
+     */
+    @Test
+    void testGetGivenNumberOfCapitalCitiesInRegionPopDesc()
+    {
+        // Getting the data and checking if it is correct.
+        ArrayList<City> capitalCities = app.GetGivenNumOfCapitalCitiesInRegionPopDesc("Middle East", 5);
+        assertEquals(capitalCities.get(0).name, "Baghdad");
+        assertEquals(capitalCities.get(0).population, 4336000);
+
+        assertEquals(capitalCities.get(4).name, "Damascus");
+        assertEquals(capitalCities.get(4).population, 1347000);
+
+        // Making sure it only gets 5 rows.
+        assertNull(capitalCities.get(5));
+    }
+
+    /**
+     * Tests if the method is giving the correct data in the correct format.
+     */
+    @Test
+    void testGetAllCapitalCitiesInContinentPopDesc()
+    {
+        // Getting the data then checking if it is correct.
+        ArrayList<City> capitalCities = app.GetAllCapitalCitiesInContinentPopDesc("Europe");
+        assertEquals(capitalCities.get(0).name, "Moscow");
+        assertEquals(capitalCities.get(0).population, 8389200);
+    }
+
+    /**
+     * Tests if the method is giving the correct data in the correct format.
+     */
+    @Test
+    void testGetAllCitiesInContinentPopDesc()
+    {
+        // Getting the data then checking if it is correct.
+        ArrayList<City> cities = app.GetAllCitiesInContinentPopDesc("Europe");
+        assertEquals(cities.get(0).name, "Moscow");
+        assertEquals(cities.get(0).population, 8389200);
+    }
+
+    /**
+     * Tests if the method is giving the correct data in the correct format.
+     */
+    @Test
+    void testGetPopulationReportOfAllContinentsTotalPopDesc()
+    {
+        // Getting the data then checking if it is correct.
+        ArrayList<Population> populationReports = app.GetPopulationReportOfAllContinentsTotalPopDesc();
+        assertEquals(populationReports.get(0).AreaName, "Asia");
+        assertEquals(populationReports.get(0).PopulationOfAreaInCitiesPercent, 18.8286);
+        assertEquals(populationReports.get(0).PopulationOfAreaNotInCitiesPercent, 81.1714);
+    }
+
+    /**
+     * Tests if the method is giving the correct data in the correct format.
+     */
+    @Test
+    void testGetPopulationReportOfAllRegionsTotalPopDesc()
+    {
+        // Getting the data then checking if it is correct.
+        ArrayList<Population> populationReports = app.GetPopulationReportOfAllContinentsTotalPopDesc();
+        assertEquals(populationReports.get(0).AreaName, "Eastern Asia");
+        assertEquals(populationReports.get(0).PopulationOfAreaInCitiesPercent, 21.0622);
+        assertEquals(populationReports.get(0).PopulationOfAreaNotInCitiesPercent, 78.9378);
+    }
+
+    /**
+     * Tests that the method will give the data in the correct format
+     * as well as it giving null when given an empty arraylist.
+     */
+    @Test
+    void testFormatCapitalCityReportsAsString()
+    {
+        // Testing it shows Null as there is no data.
+        ArrayList<City> capitalCities = new ArrayList<>();
+        assertNull(app.FormatCapitalCityReportsAsString(capitalCities));
+
+        // Making sure that the data is correct
+        capitalCities = app.GetAllCapitalCitiesPopDesc();
+        String capitalCityReportString = app.FormatCapitalCityReportsAsString(capitalCities);
+        assertTrue(capitalCityReportString.contains("London, GBR, 7285000"));
+    }
+
+    /**
+     * Tests that the method will give the data in the correct format
+     * as well as it giving null when given an empty arraylist.
+     */
+    @Test
+    void testFormatCountryReportsAsString()
+    {
+        // Testing it shows Null as there is no data.
+        ArrayList<Country> countryReports = new ArrayList<>();
+        assertNull(app.FormatCountryReportsAsString(countryReports));
+
+        //There is no country reports just yet.
+
+        /*
+        // Making sure that the data is correct
+        countryReports = Get
+        String countryReportsString = "";
+        assertTrue(countryReportsString.contains(""));
+         */
+    }
+
+    /**
+     * Tests if the data collected from the database is what it's meant to be
+     * for the languages given in descending order.
+     */
+    @Test
+    void testCittiesInACountryOrederBypopulation()
+    {
+        ArrayList<City> test = app.getAllCitiesInCountryOrderedByPopulation("China");
+        assertEquals(test.get(0).name,"Shanghai");
+        assertEquals(test.get(0).population,9696300);
+        assertEquals(test.get(0).country,"China");
+    }
+
+    @Test
+    void testGetGivenNumOfTopPopulatedCountriesInRegionPopDesc()
+    {
+        ArrayList<Country> test = app.getGivenNumOfTopPopulatedCountriesInRegionPopDesc("Caribbean", 5);
+        assertEquals(test.get(0).CountryName,"Cuba");
+        assertEquals(test.get(0).Population,11201000);
+        assertEquals(test.get(0).Region,"Caribbean");
+    }
+
+    @Test
+    void testGetGivenNumOfTopPopulatedCountriesInTheWorld()
+    {
+        ArrayList<Country> test = app.getGivenNumOfTopPopulatedCountriesInTheWorld(10);
+        assertEquals(test.get(0).CountryName,"China");
+        assertEquals(test.get(0).Population,1277558000);
+    }
+
+    @Test
+    void testgetGivenPopulationOFCountry()
+    {
+        ArrayList<Country> test = app.getGivenPopulationOFCountry("United States");
+        assertEquals(test.get(0).CountryName,"United States");
+        assertEquals(test.get(0).Population,278357000);
+    }
+
+    /**
+     * Tests if the method is giving the correct data in the correct format and only the amount asked for.
+     */
+    @Test
+    void testGetGivenNumberOfCapitalCitiesInGivenContinentPopDesc()
+    {
+        // Getting the data and checking if it is correct.
+        ArrayList<City> capitalCities = app.GetGivenNumberOfCapitalCitiesInGivenContinentPopDesc("Europe", 5);
+        assertEquals(capitalCities.get(0).name, "Moscow");
+        assertEquals(capitalCities.get(0).population, 8389200);
+
+        assertEquals(capitalCities.get(4).name, "Roma");
+        assertEquals(capitalCities.get(4).population, 2643581);
+
+        // Making sure it only gets 5 rows.
+        assertNull(capitalCities.get(5));
+    }
+
+    @Test
+    void testGetAllCapitalCities()
+    {
+        ArrayList<City> test = app.getAllCapitalCities();
+        assertEquals(test.get(0).name,"Seoul");
+        assertEquals(test.get(0).population,9981619);
+    }
+
+    @Test
+    void testgetPopulationOfAContinent()
+    {
+        long test = app.getPopulationOfAContinent("Asia");
+        assertEquals(3705025700L, test);
+    }
 }

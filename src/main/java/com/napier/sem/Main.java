@@ -19,7 +19,7 @@ public class Main {
          */
 
         // Add options to the array.
-        ArrayList<String> options = new ArrayList<>();
+        /*ArrayList<String> options = new ArrayList<>();
         options.add("test1");
         options.add("test2");
         options.add("test3");
@@ -162,7 +162,7 @@ public class Main {
                 break;
 
 
-        }
+        }*/
 
 
 
@@ -179,8 +179,27 @@ public class Main {
 
 
 
+        ArrayList<City> cittiesInACountryOrederBypopulation = a.getAllCitiesInCountryOrderedByPopulation("China");
 
+        a.displayCity(cittiesInACountryOrederBypopulation);
 
+        ArrayList<Country> topPopulAtedCountriesInARegion = a.getGivenNumOfTopPopulatedCountriesInRegionPopDesc("Caribbean", 5);
+
+        a.displayTopPopulatedCountries(topPopulAtedCountriesInARegion);
+
+        ArrayList<Country> topPopulatedCountry = a.getGivenNumOfTopPopulatedCountriesInTheWorld(10);
+
+        a.displayTopPopulatedCountries(topPopulatedCountry);
+
+        ArrayList<Country> country = a.getGivenPopulationOFCountry("United States");
+
+        a.displayTopPopulatedCountries(country);
+
+        ArrayList<City> capCities = a.getAllCapitalCities();
+
+        a.displayCapitalCity(capCities);
+
+        System.out.println("POPULATION OF CONTINET: "+ a.getPopulationOfAContinent("Asia"));
         /*ArrayList<City> city = a.getCity();
 
         a.displayCity(city);*/
