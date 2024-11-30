@@ -790,12 +790,11 @@ public class App {
         try {
             // String for SQL statement
             String selectString =
-                "SELECT city.Name AS Name, city.CountryCode AS CountryCode, city.Population AS Population, city.District AS District" +
+                "SELECT city.Name AS Name, city.CountryCode AS CountryCode, city.Population AS Population, city.District AS District " +
                     "FROM country " +
                     "INNER JOIN city ON city.CountryCode = country.Code " +
                     "WHERE country.Continent = '" + continent + "'" +
                     "ORDER BY Population Desc;";
-
 
             // Execute SQL statement
             ResultSet resultSet = runQuery(selectString);

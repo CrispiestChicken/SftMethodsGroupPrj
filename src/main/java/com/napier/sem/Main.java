@@ -45,7 +45,7 @@ public class Main {
 
         switch (chosenOption) {
             case 1:
-                ArrayList<City> fg = a.GetAllCapitalCitiesInRegionPopDesc("Middle East");
+                ArrayList<City> fg = a.GetAllCitiesInContinentPopDesc("Europe");
                 System.out.println(fg.get(0).name);
 
                 break;
