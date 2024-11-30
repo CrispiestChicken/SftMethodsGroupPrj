@@ -92,7 +92,7 @@ public class App {
         // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
         while (results.next()) {
             city = new City();
-            city.population = results.getInt("Population");
+            city.population = results.getLong("Population");
             city.countryCode = results.getString("CountryCode");
             city.district = results.getString("District");
             city.name = results.getString("Name");
@@ -121,7 +121,7 @@ public class App {
         // If there is a row of data it gets the data and stores it in the array list so that it can later be returned.
         while (results.next()) {
             city = new City();
-            city.population = results.getInt("Population");
+            city.population = results.getLong("Population");
             city.name = results.getString("Name");
             city.country = results.getString("CountryName");
 
@@ -147,7 +147,7 @@ public class App {
         while (results.next()) {
             capitalCity = new City();
             capitalCity.name = results.getString("Name");
-            capitalCity.population = results.getInt("Population");
+            capitalCity.population = results.getLong("Population");
             capitalCity.countryCode = results.getString("CountryCode");
 
             capitalCities.add(capitalCity);
@@ -200,7 +200,7 @@ public class App {
             country.CountryName = results.getString("Name");
             country.Continent = results.getString("Continent");
             country.Region = results.getString("Region");
-            country.Population = results.getInt("Population");
+            country.Population = results.getLong("Population");
             country.CapitalCity = results.getString("Capital");
 
             countries.add(country);
@@ -225,10 +225,10 @@ public class App {
         while (results.next()) {
             population = new Population();
             population.AreaName = results.getString("AreaName");
-            population.PopulationOfArea = results.getInt("AreaPopulation");
-            population.PopulationOfAreaInCities = results.getInt("AreaCityPopulation");
+            population.PopulationOfArea = results.getLong("AreaPopulation");
+            population.PopulationOfAreaInCities = results.getLong("AreaCityPopulation");
             population.PopulationOfAreaInCitiesPercent = results.getDouble("AreaCityPopulationPercent");
-            population.PopulationOfAreaNotInCities = results.getInt("AreaNotInCityPopulation");
+            population.PopulationOfAreaNotInCities = results.getLong("AreaNotInCityPopulation");
             population.PopulationOfAreaNotInCitiesPercent = results.getDouble("AreaNotInCityPopulationPercent");
 
             populationReport.add(population);
@@ -357,7 +357,7 @@ public class App {
     public ArrayList<City> getAllCapitalCities()
     {
         try {
-            ArrayList<City> capCitties = new ArrayList<City>();
+            ArrayList<City> capCitties = new ArrayList<>();
             String selectString =
                     "SELECT city.Name AS Capital, "
                             + "country.Name AS Country, "
@@ -581,7 +581,7 @@ public class App {
                     "FROM country " +
                     "INNER JOIN city ON city.ID = country.Capital " +
                     "WHERE country.Region = " + region +
-                    "ORDER BY Population Desc;";
+                    " ORDER BY city.Population Desc;";
 
 
             // Execute SQL statement
@@ -945,7 +945,6 @@ public class App {
 
         return null;
     }
-
 
     /**
      * Turns an ArrayList of Population reports into a single string with 1 report on each line.
