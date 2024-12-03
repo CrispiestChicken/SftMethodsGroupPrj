@@ -999,8 +999,12 @@ public class App {
         }
     }
 
+    /**
+     * SEM34 All Countries by Population Size
+     *
+     * @return An array list containing Country objects.
+     */
 
-    //SEM34 All Countries by Population Size
     public ArrayList<Country> getAllCountriesOrderedByPop() {
         try {
             // string sql
