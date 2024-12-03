@@ -998,4 +998,29 @@ public class App {
             return null;
         }
     }
+
+
+    //SEM34 All Countries by Population Size
+    public ArrayList<Country> getAllCountriesOrderedByPop() {
+        try {
+            // string sql
+            String selectString =
+                    "SELECT Name AS Name, Code AS Code, Name AS Name, Continent AS Continent, Region AS Region, Population AS Population, CapitalCity AS Capital" +
+                            "FROM country " +
+                            "ORDER BY Population DESC;";
+
+            // execute sql statement
+            ResultSet resultSet = runQuery(selectString);
+
+            // puts result into ArrayList of cities.
+            return getCountryDataFromResultSet(resultSet);
+
+        }
+        // in case of error
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
+    }
 }
