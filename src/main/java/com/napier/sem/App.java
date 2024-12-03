@@ -1087,4 +1087,32 @@ public class App {
         }
     }
 
+    /**
+     * SEM38 Top N Populated Countries in a Continent
+     *
+     * @return An array list containing Country objects.
+     */
+    public ArrayList<Country> getTopPopCountriesInContinent(int topPopulatedCountries, String continentName) {
+        try {
+            // Create string sql
+            String strSelect =
+                    "SELECT Name AS Name, Code AS Code, Name AS Name, Continent AS Continent, Region AS Region, Population AS Population, CapitalCity AS Capital" +
+                            "FROM country " +
+                            "WHERE Continent = '" + continentName + "' " +
+                            "ORDER BY Population DESC " +
+                            "LIMIT " + topPopulatedCountries;
+
+            // execute sql statement
+            ResultSet resultset = runQuery(strSelect);
+
+            // puts result into countries's arrayList
+            return getCountryDataFromResultSet(resultset);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
+    }
+
 }
