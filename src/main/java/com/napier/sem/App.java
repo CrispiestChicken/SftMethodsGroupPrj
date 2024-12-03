@@ -1230,4 +1230,34 @@ public class App {
         }
     }
 
+    /**
+     * SEM22 Cities in a District by Population
+     *
+     * @return An array list containing City objects.
+     */
+    public ArrayList<City> getAllCitiesInDistrictOrderedByPop(String districtName) {
+        try {
+            // string sql
+            String selectString =
+                    "SELECT city.Name AS Name, city.countryCode AS CountryCode, city.district AS District, city.country AS Country, city.Region AS Region, city.Population AS Population" +
+                            "FROM country " +
+                            "INNER JOIN district ON city.district = district.Code " +
+                            "WHERE district.Name = '" + districtName + "' " +  // replace district name
+                            "ORDER BY city.Population DESC;";
+
+            // execute sql statement
+            ResultSet resultSet = runQuery(selectString);
+
+            // puts result into an cities's arrayList
+            return getCityDataFromResultSet(resultSet);
+
+        }
+        // in case of error
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
 }
