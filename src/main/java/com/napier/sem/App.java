@@ -1009,7 +1009,7 @@ public class App {
         try {
             // string sql
             String selectString =
-                    "SELECT Name AS Name, Code AS Code, Name AS Name, Continent AS Continent, Region AS Region, Population AS Population, CapitalCity AS Capital" +
+                    "SELECT Name AS Name, Code AS Code, Continent AS Continent, Region AS Region, Population AS Population, CapitalCity AS Capital" +
                             "FROM country " +
                             "ORDER BY Population DESC;";
 
