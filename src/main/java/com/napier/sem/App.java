@@ -1201,4 +1201,33 @@ public class App {
             return null;
         }
     }
+
+    /**
+     * SEM26 Top N Populated Cities in a Country
+     *
+     * @return An array list containing City objects.
+     */
+    public ArrayList<City> getTopPopCitiesInCountry(int topPopulatedCities, String countryName) {
+        try {
+            // Create string sql
+            String strSelect =
+                    "SELECT city.Name AS Name, city.countryCode AS CountryCode, city.district AS District, city.country AS Country, city.Region AS Region, city.Population AS Population" +
+                            "FROM city " +
+                            "INNER JOIN country ON city.CountryCode = country.Code " +
+                            "WHERE country.Name = '" + countryName + "' " + // replace country name
+                            "LIMIT " + topPopulatedCities;
+
+            // execute sql statement
+            ResultSet rset = runQuery(strSelect);
+
+            // puts result into countries's arrayList
+            return getCityDataFromResultSet(rset);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
 }
