@@ -1115,4 +1115,35 @@ public class App {
         }
     }
 
+    /**
+     * SEM20 Cities in a Region by Population
+     *
+     * @return An array list containing City objects.
+     */
+    public ArrayList<City> getAllCitiesInRegionOrderedByPop(String regionName) {
+        try {
+            // string sql
+            String selectString =
+                    "SELECT city.Name AS Name, city.countryCode AS CountryCode, city.district AS District, city.country AS Country, city.Region AS Region, city.Population AS Population" +
+                            "FROM country " +
+                            "INNER JOIN region ON city.RegionCode = region.Code " +
+                            "WHERE region.Name = '" + regionName + "' " +  // replace region name
+                            "ORDER BY city.Population DESC;";
+
+            // execute sql statement
+            ResultSet resultSet = runQuery(selectString);
+
+            // puts result into an cities's arrayList
+            return getCityDataFromResultSet(resultSet);
+
+        }
+        // in case of error
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get countries details");
+            return null;
+        }
+    }
+
+
 }
