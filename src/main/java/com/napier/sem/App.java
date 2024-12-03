@@ -277,7 +277,8 @@ public class App {
             // Create string for SQL statement
             String strSelect =
                 "SELECT city.name, country.name, District, city.Population "
-                    + "FROM city join country ON city.CountryCode = country.Code ";
+                    + "FROM city join country ON city.CountryCode = country.Code" +
+                    " ORDER BY city.Population DESC ";
             // Execute SQL statement
             ResultSet rset = runQuery(strSelect);
 
