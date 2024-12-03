@@ -1172,4 +1172,33 @@ public class App {
             return null;
         }
     }
+
+    /**
+     * SEM24 Top N Populated Cities in a Continent
+     *
+     * @return An array list containing City objects.
+     */
+
+    public ArrayList<City> getTopPopCitiesInContinent(int topPopulatedCities, String continentName) {
+        try {
+            // Create string sql
+            String strSelect =
+                    "SELECT city.Name AS Name, city.countryCode AS CountryCode, city.district AS District, city.country AS Country, city.Region AS Region, city.Population AS Population" +
+                            "FROM city " +
+                            "INNER JOIN continent ON city.ContinentCode = continent.Code " +
+                            "WHERE region.Name = '" + continentName + "' " + // replace rcontinent name
+                            "LIMIT " + topPopulatedCities;
+
+            // execute sql statement
+            ResultSet rset = runQuery(strSelect);
+
+            // puts result into countries's arrayList
+            return getCityDataFromResultSet(rset);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
 }
