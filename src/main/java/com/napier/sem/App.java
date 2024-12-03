@@ -1028,4 +1028,33 @@ public class App {
             return null;
         }
     }
+    /**
+     * SEM35 All Countries in a Continent by Population
+     *
+     * @return An array list containing Country objects.
+     */
+
+    public ArrayList<Country> getAllCountriesInContinentOrderedByPop(String continentName) {
+        try {
+            // string sql
+            String selectString =
+                    "SELECT country.Name AS Name, country.Code AS Code, country.Continent AS Continent, country.Region AS Region, country.Population AS Populatio, country.CapitalCity AS Capital" +
+                            "FROM country " +
+                            "INNER JOIN continent ON country.ContinentCode = continent.Code " +
+                            "WHERE continent.Name = '" + continentName + "' " +  // replace continent name
+                            "ORDER BY country.Population DESC;";
+
+            // execute sql statement
+            ResultSet resultSet = runQuery(selectString);
+
+            // puts result into ArrayList of cities.
+            return getCountryDataFromResultSet(resultSet);
+
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
+    }
 }
