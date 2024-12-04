@@ -64,6 +64,20 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
       - name: Package and Run docker compose
+        if: github.ref == 'refs/heads/develop'
         run: |
           mvn package -DskipTests
           docker compose up --abort-on-container-exit
+
+      - name: Package and Run docker compose
+        if: github.ref == 'refs/heads/master'
+        run: |
+          mvn package -DskipTests
+          docker compose up --abort-on-container-exit
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          automatic_release_tag: "latest"
+          files: |
+            ./target/*.jar 
