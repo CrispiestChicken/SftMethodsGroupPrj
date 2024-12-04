@@ -37,7 +37,7 @@ public class Main {
         int chosenOption = 1;
 
         // If option invalid tells the user to select a valid option and ending the program.
-        if (chosenOption < 1 || chosenOption > 36) {
+        /*if (chosenOption < 1 || chosenOption > 36) {
             System.out.println("Please enter a valid number between 1 and 36");
             return;
         }
@@ -153,7 +153,7 @@ public class Main {
                 break;
             case 36:
                 System.out.println("test36Result");
-                break;
+                break;*/
 
 
 
@@ -163,6 +163,7 @@ public class Main {
 
 
 
+        System.out.println(a.getGlobalPopulation());
         /*
         ArrayList<City> cittiesInACountryOrederBypopulation = a.getAllCitiesInCountryOrderedByPopulation("China");
 
@@ -201,4 +202,4 @@ public class Main {
         a.disconnect();*/
         }
     }
-}
+

@@ -553,6 +553,19 @@ public class App {
         }
     }
 
+    public int getGlobalPopulation()
+    {
+        try{
+            String stringSelect = "SELECT SUM(Population) AS GlobalPopulation FROM country";;
+            ResultSet resultSet = runQuery(stringSelect);
+
+            return resultSet.getInt("GlobalPopulation");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get language report");
+            return -1;
+        }
+    }
     /**
      * This displays the language report
      */
