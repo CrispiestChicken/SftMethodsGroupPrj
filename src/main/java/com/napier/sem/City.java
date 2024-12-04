@@ -5,8 +5,9 @@ package com.napier.sem;
 public class City
 {
     public String name;
-    public int population;
+    public long population;
     public String countryCode;
     public String district;
     public String country;
+    public String region;
 }

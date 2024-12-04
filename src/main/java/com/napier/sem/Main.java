@@ -3,35 +3,29 @@ package com.napier.sem;
 import java.util.ArrayList;
 
 public class Main {
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         // Create new Application
         App a = new App();
 
-        a.connect("localhost:33060", 10000);
 
-        /*
         if (args.length < 1) {
-
+            a.connect("localhost:33060", 10000);
         } else {
             a.connect(args[0], Integer.parseInt(args[1]));
         }
-         */
+
 
         // Add options to the array.
-        /*ArrayList<String> options = new ArrayList<>();
+        ArrayList<String> options = new ArrayList<>();
         options.add("test1");
         options.add("test2");
         options.add("test3");
         options.add("test4");
 
 
-
-
         String menu = "";
         int counter = 1;
-        for(String option : options)
-        {
+        for (String option : options) {
             menu = menu.concat("\n" + counter + ". " + option);
             counter++;
         }
@@ -39,21 +33,21 @@ public class Main {
         System.out.println(menu);
 
 
-
         // Choosing the option (1/36).
         int chosenOption = 1;
 
         // If option invalid tells the user to select a valid option and ending the program.
-        if (chosenOption < 1 || chosenOption > 36)
-        {
+        if (chosenOption < 1 || chosenOption > 36) {
             System.out.println("Please enter a valid number between 1 and 36");
             return;
         }
 
 
-        switch(chosenOption){
+        switch (chosenOption) {
             case 1:
-                System.out.println("test1Result");
+                ArrayList<City> capitalCities = a.GetAllCapitalCitiesPopDesc();
+                String allCapitalCitiesString = a.FormatCapitalCityReportsAsString(capitalCities);
+
                 break;
             case 2:
                 System.out.println("test2Result");
@@ -162,7 +156,6 @@ public class Main {
                 break;
 
 
-        }*/
 
 
 
@@ -170,27 +163,28 @@ public class Main {
 
 
 
-
-
-
-
-
-
-
-
-
+        /*
         ArrayList<City> cittiesInACountryOrederBypopulation = a.getAllCitiesInCountryOrderedByPopulation("China");
 
         a.displayCity(cittiesInACountryOrederBypopulation);
 
         ArrayList<Country> topPopulAtedCountriesInARegion = a.getGivenNumOfTopPopulatedCountriesInRegionPopDesc("Caribbean", 5);
 
-        a.displayTopPopulatedCountriesInARegionCity(topPopulAtedCountriesInARegion);
+        a.displayTopPopulatedCountries(topPopulAtedCountriesInARegion);
 
-        int GlobalPop = a.GetGlobalPop();
-        a.displayGlobalPop(GlobalPop);
+        ArrayList<Country> topPopulatedCountry = a.getGivenNumOfTopPopulatedCountriesInTheWorld(10);
 
+        a.displayTopPopulatedCountries(topPopulatedCountry);
 
+        ArrayList<Country> country = a.getGivenPopulationOFCountry("United States");
+
+        a.displayTopPopulatedCountries(country);
+
+        ArrayList<City> capCities = a.getAllCapitalCities();
+
+        a.displayCapitalCity(capCities);
+
+        System.out.println("POPULATION OF CONTINET: "+ a.getPopulationOfAContinent("Asia"));
         /*ArrayList<City> city = a.getCity();
 
         a.displayCity(city);*/
@@ -205,5 +199,6 @@ public class Main {
         a.displayCity(capPopDestRep);
         // Disconnect from database
         a.disconnect();*/
+        }
     }
 }
