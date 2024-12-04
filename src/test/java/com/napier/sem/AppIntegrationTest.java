@@ -23,7 +23,7 @@ public class AppIntegrationTest {
     @Test
     void testGetCity(){
         ArrayList<City> testCity = app.getCity();
-        assertTrue(testCity.get(0).name.equals("Kabul"));
+        assertTrue(testCity.get(0).name.equals("Mumbai (Bombay)"));
     }
 
     /**
