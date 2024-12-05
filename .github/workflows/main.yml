@@ -63,14 +63,16 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
+        if: ${{github.ref == 'refs/heads/develop'}}
       - name: Package and Run docker compose
-        if: github.ref == 'refs/heads/develop'
+
         run: |
           mvn package -DskipTests
           docker compose up --abort-on-container-exit
 
+        if: ${{github.ref == 'refs/heads/master'}}
       - name: Package and Run docker compose
-        if: github.ref == 'refs/heads/master'
+
         run: |
           mvn package -DskipTests
           docker compose up --abort-on-container-exit
