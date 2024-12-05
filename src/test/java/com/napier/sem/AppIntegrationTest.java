@@ -298,4 +298,24 @@ public class AppIntegrationTest {
         long test = app.getPopulationOfAContinent("Asia");
         assertEquals(3705025700L, test);
     }
+
+    @Test
+    void  testGetAllCountriesOrderedByPop()
+    {
+        ArrayList<Country> test = app.getAllCountriesOrderedByPop();
+        assertEquals(test.get(0).CountryName, "China");
+        assertEquals(test.get(0).Population,11201000);
+    }
+
+    @Test
+    void testGetAllCountriesInContinentOrderedByPop()
+    {
+        ArrayList<Country> test = app.getAllCountriesInContinentOrderedByPop("Asia");
+        assertEquals(test.get(0).CountryName,  "China");
+        assertEquals(test.get(0).Population,278357000);
+//        assertEquals(test.get(0).Population,1277558000);
+
+    }
+
+
 }
