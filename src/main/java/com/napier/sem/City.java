@@ -9,4 +9,5 @@ public class City
     public String countryCode;
     public String district;
     public String country;
+    public String region;
 }

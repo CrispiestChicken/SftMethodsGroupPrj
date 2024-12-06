@@ -277,7 +277,8 @@ public class App {
             // Create string for SQL statement
             String strSelect =
                 "SELECT city.name, country.name, District, city.Population "
-                    + "FROM city join country ON city.CountryCode = country.Code ";
+                    + "FROM city join country ON city.CountryCode = country.Code" +
+                    " ORDER BY city.Population DESC ";
             // Execute SQL statement
             ResultSet rset = runQuery(strSelect);
 
@@ -998,4 +999,265 @@ public class App {
             return null;
         }
     }
+
+    /**
+     * SEM34 All Countries by Population Size
+     *
+     * @return An array list containing Country objects.
+     */
+    public ArrayList<Country> getAllCountriesOrderedByPop() {
+        try {
+            // string sql
+            String selectString =
+                    "SELECT Name AS Name, Code AS Code, Continent AS Continent, Region AS Region, Population AS Population, CapitalCity AS Capital" +
+                            "FROM country " +
+                            "ORDER BY Population DESC;";
+
+            // execute sql statement
+            ResultSet resultSet = runQuery(selectString);
+
+            // puts result into ArrayList of cities.
+            return getCountryDataFromResultSet(resultSet);
+
+        }
+        // in case of error
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
+    }
+
+    /**
+     * SEM35 All Countries in a Continent by Population
+     *
+     * @return An array list containing Country objects.
+     */
+    public ArrayList<Country> getAllCountriesInContinentOrderedByPop(String continentName) {
+        try {
+            // string sql
+            String selectString =
+                    "SELECT country.Name AS Name, country.Code AS Code, country.Continent AS Continent, country.Region AS Region, country.Population AS Populatio, country.CapitalCity AS Capital" +
+                            "FROM country " +
+                            "INNER JOIN continent ON country.ContinentCode = continent.Code " +
+                            "WHERE continent.Name = '" + continentName + "' " +  // replace continent name
+                            "ORDER BY country.Population DESC;";
+
+            // execute sql statement
+            ResultSet resultSet = runQuery(selectString);
+
+            // puts result into ArrayList of cities.
+            return getCountryDataFromResultSet(resultSet);
+
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
+    }
+
+    /**
+     * SEM36 Countries in a Region by Population
+     *
+     * @return An array list containing Country objects.
+     */
+    public ArrayList<Country> getAllCountriesInRegionOrderedByPop(String regionName) {
+        try {
+            // string sql
+            String selectString =
+                    "SELECT country.Name AS Name, country.Code AS Code, country.Continent AS Continent, country.Region AS Region, country.Population AS Populatio, country.CapitalCity AS Capital" +
+                            "FROM country " +
+                            "INNER JOIN region ON country.RegionCode = region.Code " +
+                            "WHERE region.Name = '" + regionName + "' " +  // replace region name
+                            "ORDER BY country.Population DESC;";
+
+            // execute sql statement
+            ResultSet resultSet = runQuery(selectString);
+
+            // puts result into an cities's arrayList
+            return getCountryDataFromResultSet(resultSet);
+
+        }
+        // in case of error
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get countries details");
+            return null;
+        }
+    }
+
+    /**
+     * SEM38 Top N Populated Countries in a Continent
+     *
+     * @return An array list containing Country objects.
+     */
+    public ArrayList<Country> getTopPopCountriesInContinent(int topPopulatedCountries, String continentName) {
+        try {
+            // Create string sql
+            String strSelect =
+                    "SELECT Name AS Name, Code AS Code, Name AS Name, Continent AS Continent, Region AS Region, Population AS Population, CapitalCity AS Capital" +
+                            "FROM country " +
+                            "WHERE Continent = '" + continentName + "' " +
+                            "ORDER BY Population DESC " +
+                            "LIMIT " + topPopulatedCountries;
+
+            // execute sql statement
+            ResultSet resultset = runQuery(strSelect);
+
+            // puts result into countries's arrayList
+            return getCountryDataFromResultSet(resultset);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
+    }
+
+    /**
+     * SEM20 Cities in a Region by Population
+     *
+     * @return An array list containing City objects.
+     */
+    public ArrayList<City> getAllCitiesInRegionOrderedByPop(String regionName) {
+        try {
+            // string sql
+            String selectString =
+                    "SELECT city.Name AS Name, city.countryCode AS CountryCode, city.district AS District, city.country AS Country, city.Region AS Region, city.Population AS Population" +
+                            "FROM country " +
+                            "INNER JOIN region ON city.RegionCode = region.Code " +
+                            "WHERE region.Name = '" + regionName + "' " +  // replace region name
+                            "ORDER BY city.Population DESC;";
+
+            // execute sql statement
+            ResultSet resultSet = runQuery(selectString);
+
+            // puts result into an cities's arrayList
+            return getCityDataFromResultSet(resultSet);
+
+        }
+        // in case of error
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get countries details");
+            return null;
+        }
+    }
+
+    /**
+     * SEM25 Top N Populated Cities in a Region
+     *
+     * @return An array list containing City objects.
+     */
+    public ArrayList<City> getTopPopCitiesInRegion(int topPopulatedCities, String regionName) {
+        try {
+            // Create string sql
+            String strSelect =
+                    "SELECT city.Name AS Name, city.countryCode AS CountryCode, city.district AS District, city.country AS Country, city.Region AS Region, city.Population AS Population" +
+                            "FROM city " +
+                            "INNER JOIN region ON city.RegionCode = region.Code " +
+                            "WHERE region.Name = '" + regionName + "' " + // replace region name
+                            "LIMIT " + topPopulatedCities;
+
+            // execute sql statement
+            ResultSet rset = runQuery(strSelect);
+
+            // puts result into countries's arrayList
+            return getCityDataFromResultSet(rset);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
+    /**
+     * SEM24 Top N Populated Cities in a Continent
+     *
+     * @return An array list containing City objects.
+     */
+
+    public ArrayList<City> getTopPopCitiesInContinent(int topPopulatedCities, String continentName) {
+        try {
+            // Create string sql
+            String strSelect =
+                    "SELECT city.Name AS Name, city.countryCode AS CountryCode, city.district AS District, city.country AS Country, city.Region AS Region, city.Population AS Population" +
+                            "FROM city " +
+                            "INNER JOIN continent ON city.ContinentCode = continent.Code " +
+                            "WHERE region.Name = '" + continentName + "' " + // replace rcontinent name
+                            "LIMIT " + topPopulatedCities;
+
+            // execute sql statement
+            ResultSet rset = runQuery(strSelect);
+
+            // puts result into countries's arrayList
+            return getCityDataFromResultSet(rset);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
+    /**
+     * SEM26 Top N Populated Cities in a Country
+     *
+     * @return An array list containing City objects.
+     */
+    public ArrayList<City> getTopPopCitiesInCountry(int topPopulatedCities, String countryName) {
+        try {
+            // Create string sql
+            String strSelect =
+                    "SELECT city.Name AS Name, city.countryCode AS CountryCode, city.district AS District, city.country AS Country, city.Region AS Region, city.Population AS Population" +
+                            "FROM city " +
+                            "INNER JOIN country ON city.CountryCode = country.Code " +
+                            "WHERE country.Name = '" + countryName + "' " + // replace country name
+                            "LIMIT " + topPopulatedCities;
+
+            // execute sql statement
+            ResultSet rset = runQuery(strSelect);
+
+            // puts result into countries's arrayList
+            return getCityDataFromResultSet(rset);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
+    /**
+     * SEM22 Cities in a District by Population
+     *
+     * @return An array list containing City objects.
+     */
+    public ArrayList<City> getAllCitiesInDistrictOrderedByPop(String districtName) {
+        try {
+            // string sql
+            String selectString =
+                    "SELECT city.Name AS Name, city.countryCode AS CountryCode, city.district AS District, city.country AS Country, city.Region AS Region, city.Population AS Population" +
+                            "FROM country " +
+                            "INNER JOIN district ON city.district = district.Code " +
+                            "WHERE district.Name = '" + districtName + "' " +  // replace district name
+                            "ORDER BY city.Population DESC;";
+
+            // execute sql statement
+            ResultSet resultSet = runQuery(selectString);
+
+            // puts result into an cities's arrayList
+            return getCityDataFromResultSet(resultSet);
+
+        }
+        // in case of error
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
 }
