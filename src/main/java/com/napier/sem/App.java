@@ -332,6 +332,11 @@ public class App {
         }
     }
 
+    /**
+     * * this displays capital cities
+     * @param cities
+     */
+
     public void displayCapitalCity(ArrayList<City> cities) {
         if (cities != null) {
             System.out.printf("%-30s %-30s %-30s %-30s %n", "Capital", "Country", "District", "Population ");
@@ -355,6 +360,10 @@ public class App {
         }
     }
 
+    /**
+     * this gets the capital cities
+     * @return
+     */
     public ArrayList<City> getAllCapitalCities()
     {
         try {
