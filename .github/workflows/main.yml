@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - master
-      - develop
 jobs:
   UnitTests:
     name: Unit Tests
@@ -63,14 +62,13 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
-        if: ${{github.ref == 'refs/heads/develop'}}
+
       - name: Package and Run docker compose
 
         run: |
           mvn package -DskipTests
           docker compose up --abort-on-container-exit
 
-        if: ${{github.ref == 'refs/heads/master'}}
       - name: Package and Run docker compose
 
         run: |
