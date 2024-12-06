@@ -304,16 +304,15 @@ public class AppIntegrationTest {
     {
         ArrayList<Country> test = app.getAllCountriesOrderedByPop();
         assertEquals(test.get(0).CountryName, "China");
-        assertEquals(test.get(0).Population,11201000);
+        assertEquals(test.get(0).Population,1277558000);
     }
 
     @Test
     void testGetAllCountriesInContinentOrderedByPop()
     {
         ArrayList<Country> test = app.getAllCountriesInContinentOrderedByPop("Asia");
-        assertEquals(test.get(0).CountryName,  "China");
-        assertEquals(test.get(0).Population,278357000);
-//        assertEquals(test.get(0).Population,1277558000);
+         assertEquals(test.get(0).CountryName,  "China");
+         assertEquals(test.get(0).Population,1277558000);
 
     }
 

@@ -1026,7 +1026,7 @@ public class App {
         try {
             // string sql
             String selectString =
-                    "SELECT Name AS Name, Code AS Code, Continent AS Continent, Region AS Region, Population AS Population, CapitalCity AS Capital" +
+                    "SELECT Name AS Name, Code AS Code, Continent AS Continent, Region AS Region, Population AS Population, Capital AS Capital " +
                             "FROM country " +
                             "ORDER BY Population DESC;";
 
@@ -1054,11 +1054,10 @@ public class App {
         try {
             // string sql
             String selectString =
-                    "SELECT country.Name AS Name, country.Code AS Code, country.Continent AS Continent, country.Region AS Region, country.Population AS Population, country.CapitalCity AS Capital" +
-                            "FROM country " +
-                            "INNER JOIN continent ON country.ContinentCode = continent.Code " +
-                            "WHERE continent.Name = '" + continentName + "' " +  // replace continent name
-                            "ORDER BY country.Population DESC;";
+                    "SELECT country.Name AS Name, country.Code AS Code, country.Continent AS Continent, country.Region AS Region, country.Population AS Population, country.Capital AS Capital " +
+                    "FROM country " +
+                    "WHERE country.Continent = '" + continentName + "'" +
+                    " ORDER BY country.Population DESC";
 
             // execute sql statement
             ResultSet resultSet = runQuery(selectString);
