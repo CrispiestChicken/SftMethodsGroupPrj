@@ -28,7 +28,7 @@ public class AppIntegrationTest {
 
     /**
      * Tests if the data collected from the database is what it's meant to be
-     * for the top populateed cities in a dirtrict
+     * for the top populateed cities in a dirtrictt
      */
     @Test
     void testGetTopPopulateCitiesInADistrict(){
