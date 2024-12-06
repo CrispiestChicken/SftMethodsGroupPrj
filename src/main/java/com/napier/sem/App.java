@@ -1054,7 +1054,7 @@ public class App {
         try {
             // string sql
             String selectString =
-                    "SELECT country.Name AS Name, country.Code AS Code, country.Continent AS Continent, country.Region AS Region, country.Population AS Populatio, country.CapitalCity AS Capital" +
+                    "SELECT country.Name AS Name, country.Code AS Code, country.Continent AS Continent, country.Region AS Region, country.Population AS Population, country.CapitalCity AS Capital" +
                             "FROM country " +
                             "INNER JOIN continent ON country.ContinentCode = continent.Code " +
                             "WHERE continent.Name = '" + continentName + "' " +  // replace continent name
@@ -1083,7 +1083,7 @@ public class App {
         try {
             // string sql
             String selectString =
-                    "SELECT country.Name AS Name, country.Code AS Code, country.Continent AS Continent, country.Region AS Region, country.Population AS Populatio, country.CapitalCity AS Capital" +
+                    "SELECT country.Name AS Name, country.Code AS Code, country.Continent AS Continent, country.Region AS Region, country.Population AS Population, country.CapitalCity AS Capital" +
                             "FROM country " +
                             "INNER JOIN region ON country.RegionCode = region.Code " +
                             "WHERE region.Name = '" + regionName + "' " +  // replace region name
